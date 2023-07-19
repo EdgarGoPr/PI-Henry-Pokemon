@@ -12,5 +12,5 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
-  return Type
+  return Type;
 };
