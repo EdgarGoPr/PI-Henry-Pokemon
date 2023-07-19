@@ -29,10 +29,9 @@ const getPokemonDetail = async (id) => {
   if (id.length < 4) {
     // console.log(id, 'idvfabgdshrv')
     // const pokemonDetalle = await pokemonData.find(id => id == pokemonData.id);
-    return await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    // const pokemonData = pokemonDetalle.data;
-    // console.log(pokemonDetalle, 'pokemonDetalle');S
-    // return pokemonData
+    const pokemonDetalle = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    let pokemonDetail = pokemonDetalle.data
+    return pokemonDetail
   }
   
   // const dbPokemon = {
