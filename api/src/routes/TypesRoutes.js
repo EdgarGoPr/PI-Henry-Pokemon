@@ -1,4 +1,4 @@
-const types = require("../handlers/GetTypes");
+const types = require("../handlers/TypeHandlers");
 const typesRoutes = require("express").Router();
 
 typesRoutes.get("/", types);

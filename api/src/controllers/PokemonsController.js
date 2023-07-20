@@ -19,19 +19,19 @@ const getPokemonName = async (name) => {
       (p) => p.name == name.toLowerCase()
     );
     if (!filteredPokemon) {
-      return {message: `No hay pokemones llamados ${name}`};
+      return { message: `No hay pokemones llamados ${name}` };
     }
-    const pokemonResponse = await axios.get(filteredPokemon.url)
-    const pokemonData = pokemonResponse.data
-    const formatPokemon = formatPokemonData(pokemonData)
-    return formatPokemon
+    const pokemonResponse = await axios.get(filteredPokemon.url);
+    const pokemonData = pokemonResponse.data;
+    const formatPokemon = formatPokemonData(pokemonData);
+    return formatPokemon;
   } catch (error) {
     throw new Error({ error: error.message });
   }
 };
 
 const getPokemonDetail = async (id) => {
-  if (id.length < 4) {
+  if (id.length <= 4) {
     // console.log(id, 'idvfabgdshrv')
     // const pokemonDetalle = await pokemonData.find(id => id == pokemonData.id);
     const pokemonDetalle = await axios.get(
@@ -59,23 +59,23 @@ const getPokemonDetail = async (id) => {
 const createPokemon = async (pokemonData) => {
   try {
     const pjExists = Pokemon.findOne({ id: pokemonData.id });
-    if (pjExists) {
+    if (pjExists === undefined || pjExists === null) {
+      const newPokemon = new Pokemon({
+        name: pokemonData.name,
+        image: pokemonData.image,
+        health: pokemonData.health,
+        attack: pokemonData.attack,
+        defense: pokemonData.defense,
+        speed: pokemonData.speed,
+        height: pokemonData.height,
+        weight: pokemonData.weight,
+        type: pokemonData.types.map((type) => type.type.name),
+      });
+      await newPokemon.save();
+      return newPokemon;
+    } else {
       throw new Error("Pokemon already exists");
     }
-    const newPokemon = new Pokemon({
-      id: pokemonData.id,
-      name: pokemonData.name,
-      image: pokemonData.image,
-      health: pokemonData.health,
-      attack: pokemonData.attack,
-      defense: pokemonData.defense,
-      speed: pokemonData.speed,
-      height: pokemonData.height,
-      weight: pokemonData.weight,
-      type: pokemonData.types.map((type) => type.type.name),
-    });
-    await newPokemon.save();
-    return newPokemon;
   } catch (error) {
     throw new Error(`Error creating a new Pokemon: ${error.message}`);
   }
