@@ -26,7 +26,14 @@ const getAllPokemons = async () => {
       return formatCard(response.data);
     });
 
-    const dbPokemons = await Pokemon.findAll();
+    const dbPokemons = await Pokemon.findAll({
+      include: [
+        {
+          model: Type,
+          attribute: ["name"],
+        },
+      ],
+    });
     const formattedDbPokemons = dbPokemons.map((pokemon) =>
       formatCard(pokemon)
     );
@@ -483,9 +490,6 @@ const getPokemonDetail = async (id) => {
 // };
 
 //--------------------------------------------------------------------
-
-
-//------------------------------------------------------------------------------------
 const createPokemon = async ({
   name,
   image,
@@ -510,22 +514,22 @@ const createPokemon = async ({
         speed,
         height,
         weight,
-        type,
       });
-      console.log('types', type);
-      // newPokemon.type = type
-      let allTypes = type;
-      console.log('allTypes::::::>',allTypes)
-      newPokemon.type = allTypes
-      // for (const typeName of type) {
-      //   const [newType] = await Type.findOrCreate({ where: { name: typeName } });
-      //   allTypes.push(newType);
-      //   console.log('allTypes', allTypes.name)
-      // }
-      // await newPokemon.addTypes(allTypes);
 
-      console.log('type--------->', newPokemon.type);
-      const pokePoke = {
+      const allTypes = [];
+      for (const typeName of type) {
+        const newType = await Type.findOne({ where: { name: typeName } });
+        if (newType) {
+          allTypes.push(newType);
+        } else {
+          throw new Error(`Type "${typeName}" does not exist in the database.`);
+        }
+      }
+
+      // Asociar los tipos con el nuevo Pokémon utilizando el método adecuado según tu definición de modelo
+      await newPokemon.addTypes(allTypes);
+
+      return {
         id: newPokemon.id,
         name: newPokemon.name,
         image: newPokemon.image,
@@ -535,14 +539,8 @@ const createPokemon = async ({
         speed: newPokemon.speed,
         height: newPokemon.height,
         weight: newPokemon.weight,
-        type: newPokemon.type
-
-      } 
-      return pokePoke
-      // {include: {
-      //   model: Type, 
-      //   attributes: ['name']
-      // }}
+        type: type,
+      };
     } else {
       throw new Error("Pokemon already exists");
     }
@@ -551,6 +549,71 @@ const createPokemon = async ({
   }
 };
 
+//------------------------------------------------------------------------------------
+// const createPokemon = async ({
+//   name,
+//   image,
+//   life,
+//   attack,
+//   defense,
+//   speed,
+//   height,
+//   weight,
+//   type,
+// }) => {
+//   try {
+//     const existingPokemon = await Pokemon.findOne({ where: { name } });
+
+//     if (!existingPokemon) {
+//       const newPokemon = await Pokemon.create({
+//         name,
+//         image,
+//         life,
+//         attack,
+//         defense,
+//         speed,
+//         height,
+//         weight,
+//       });
+//       console.log("types", type);
+//       // newPokemon.type = type
+//       // let allTypes = type;
+//       // console.log("allTypes::::::>", allTypes);
+//       // newPokemon.type = allTypes
+//       // for (const typeName of type) {
+//       //   const [newType] = await Type.findOrCreate({ where: { name: typeName } });
+//       //   allTypes.push(newType);
+//       //   console.log('allTypes', allTypes.name)
+//       // }
+//       // await newPokemon.addTypes(allTypes);
+
+//       // console.log("type--------->", newPokemon.type);
+//       const pokePoke = {
+//         id: newPokemon.id,
+//         name: newPokemon.name,
+//         image: newPokemon.image,
+//         life: newPokemon.life,
+//         attack: newPokemon.attack,
+//         defense: newPokemon.defense,
+//         speed: newPokemon.speed,
+//         height: newPokemon.height,
+//         weight: newPokemon.weight,
+//         type: type,
+//       };
+//       let allTypes = []
+//       for(const pepito of type) {
+//         const newType = await Type.findOne({ where: { name: pepito } })
+//         allTypes.push(newType)
+//       }
+//       await pokePoke.addTypes(allTypes)
+//       return pokePoke;
+//     } else {
+//       throw new Error("Pokemon already exists");
+//     }
+//   } catch (error) {
+//     throw new Error(`Error creating a new Pokemon: ${error.message}`);
+//   }
+// };
 
 module.exports = {
   getAllPokemons,
