@@ -126,4 +126,20 @@ function formatPokemonData(pokemon) {
   return formattedPokemon;
 }
 
-module.exports = { formatPokemonData };
+function formatCard(pokemon) {
+  if (!pokemon) {
+    return null; // Return null if the pokemon data is not provided
+  }
+
+  const { image, name, sprites, types } = pokemon;
+
+  const formattedCard = {
+    image: sprites?.front_default || image || "default_image_url", // Replace "default_image_url" with a default image URL if available
+    name,
+    type: types?.map((type) => type?.type?.name || null) || [], // Return an empty array if types is not provided
+  };
+
+  return formattedCard;
+}
+
+module.exports = { formatPokemonData, formatCard };

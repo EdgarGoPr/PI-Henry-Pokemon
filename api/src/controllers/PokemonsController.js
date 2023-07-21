@@ -1,19 +1,44 @@
 const axios = require("axios");
-const { formatPokemonData } = require("../Utils/FormatPokemon");
+const { formatPokemonData, formatCard } = require("../Utils/FormatPokemon");
 const { Pokemon, Type } = require("../db");
 
-const getAllPokemons = async () => {
-  const apiResponse = await axios.get(
-    "https://pokeapi.co/api/v2/pokemon?limit=9"
-  );
-  const apiPokemons = apiResponse.data.results;
-  const dbPokemons = await Pokemon.findAll();
-  const allPokemons = [...apiPokemons, ...dbPokemons];
+// const getAllPokemons = async () => {
+//   const apiResponse = await axios.get(
+//     "https://pokeapi.co/api/v2/pokemon?limit=9"
+//   );
+//   const apiPokemons = apiResponse.data.results;
+//   const dbPokemons = await Pokemon.findAll();
+//   const allPokemons = [...apiPokemons, ...dbPokemons];
 
-  return allPokemons;
-  // let pokeFormateo = formatPokemonData(pokemons.data)
-  // return pokeFormateo;
-  // return pokemons.data.results
+//   return allPokemons;
+//   // let pokeFormateo = formatPokemonData(pokemons.data)
+//   // return pokeFormateo;
+//   // return pokemons.data.results
+// };
+
+const getAllPokemons = async () => {
+  try {
+    const apiResponse = await axios.get(
+      "https://pokeapi.co/api/v2/pokemon?limit=9"
+    );
+    const apiPokemons = apiResponse.data.results.map(async (pokemon) => {
+      const response = await axios.get(pokemon.url);
+      return formatCard(response.data);
+    });
+
+    const dbPokemons = await Pokemon.findAll();
+    const formattedDbPokemons = dbPokemons.map((pokemon) =>
+      formatCard(pokemon)
+    );
+
+    const allPokemons = [
+      ...formattedDbPokemons,
+      ...(await Promise.all(apiPokemons)),
+    ];
+    return allPokemons;
+  } catch (error) {
+    throw new Error(`Error fetching Pokemons: ${error.message}`);
+  }
 };
 
 // const getPokemonName = async (name) => {
@@ -70,7 +95,7 @@ const getPokemonName = async (name) => {
     const formatPokemon = formatPokemonData(pokemonData);
     return formatPokemon;
   } catch (error) {
-    throw new Error( error.message );
+    throw new Error(error.message);
   }
 };
 
@@ -109,7 +134,9 @@ const getPokemonDetail = async (id) => {
       const pokemonDetail = pokemonDetalle.data;
       return formatPokemonData(pokemonDetail);
     } catch (error) {
-      throw new Error(`Error fetching Pokemon details from API: ${error.message}`);
+      throw new Error(
+        `Error fetching Pokemon details from API: ${error.message}`
+      );
     }
   } else {
     try {
@@ -122,11 +149,12 @@ const getPokemonDetail = async (id) => {
       const formattedPokemon = formatPokemonData(dbPokemon);
       return formattedPokemon;
     } catch (error) {
-      throw new Error(`Error fetching Pokemon details from database: ${error.message}`);
+      throw new Error(
+        `Error fetching Pokemon details from database: ${error.message}`
+      );
     }
   }
 };
-
 
 // const createPokemon = async (pokemonData) => {
 //   try {
@@ -330,7 +358,7 @@ const createPokemon = async ({
           await newPokemon.addType(types);
         }
       }
-      console.log('types', newPokemon.type)
+      console.log("types", newPokemon.type);
       return newPokemon;
     } else {
       throw new Error("Pokemon already exists");
@@ -339,7 +367,6 @@ const createPokemon = async ({
     throw new Error(`Error creating a new Pokemon: ${error.message}`);
   }
 };
-
 
 // const createPokemon = async (pokemonData) => {
 //   try {
