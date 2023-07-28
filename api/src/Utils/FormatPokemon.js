@@ -92,7 +92,7 @@
 
 function formatPokemonData(pokemon) {
   if (!pokemon) {
-    return null; // Return null if the pokemon data is not provided
+    return null;
   }
 
   const {
@@ -113,14 +113,14 @@ function formatPokemonData(pokemon) {
   const formattedPokemon = {
     id,
     name,
-    image: sprites?.front_default || image || "default_image_url", // Replace "default_image_url" with a default image URL if available
-    health: stats?.[0]?.base_stat || life || 0, // Replace 0 with a default health value if available
-    attack: stats?.[1]?.base_stat || attack || 0, // Replace 0 with a default attack value if available
-    defense: stats?.[2]?.base_stat || defense || 0, // Replace 0 with a default defense value if available
+    image: sprites?.front_default || image || "default_image_url", 
+    health: stats?.[0]?.base_stat || life || 0, 
+    attack: stats?.[1]?.base_stat || attack || 0, 
+    defense: stats?.[2]?.base_stat || defense || 0, 
     speed: stats?.[5]?.base_stat || speed || null,
     height,
     weight,
-    type: types?.map((type) => type?.type?.name || null) || [], // Return an empty array if types is not provided
+    type: types?.map((type) => type?.type?.name || null) || [], 
   };
 
   return formattedPokemon;
@@ -128,15 +128,16 @@ function formatPokemonData(pokemon) {
 
 function formatCard(pokemon) {
   if (!pokemon) {
-    return null; // Return null if the pokemon data is not provided
+    return null;
   }
 
-  const { image, name, sprites, types } = pokemon;
+  const { id, image, name, sprites, types } = pokemon;
 
   const formattedCard = {
-    image: sprites?.front_default || image || "default_image_url", // Replace "default_image_url" with a default image URL if available
+    id,
+    image: sprites?.front_default || image || "default_image_url", 
     name,
-    type: types?.map((type) => type?.type?.name || null) || [], // Return an empty array if types is not provided
+    type: types?.map((type) => type?.type?.name || null) || [],
   };
 
   return formattedCard;

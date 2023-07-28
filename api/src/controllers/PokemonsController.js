@@ -530,8 +530,6 @@ const getPokemonDetail = async (id) => {
 //           throw new Error(`Type "${typeName}" does not exist in the database.`);
 //         }
 //       }
-
-//       // Asociar los tipos con el nuevo Pokémon utilizando el método adecuado según tu definición de modelo
 //       await newPokemon.addTypes(allTypes);
 
 //       return {
@@ -552,7 +550,7 @@ const getPokemonDetail = async (id) => {
 //   } catch (error) {
 //     throw new Error(`Error creating a new Pokemon: ${error.message}`);
 //   }
-// };
+// };  Solo muestra los types
 
 //------------------------------------------------------------------------------------
 
@@ -619,7 +617,7 @@ const getPokemonDetail = async (id) => {
 //   } catch (error) {
 //     throw new Error(`Error creating a new Pokemon: ${error.message}`);
 //   }
-// };
+// };  No Funciona para nada
 
 //------------------------------------------------------------------------------
 
@@ -649,7 +647,6 @@ const getPokemonDetail = async (id) => {
 //         weight,
 //       });
 
-//       // Ensure type is an array even if only one type is provided as a string
 //       const typesArray = Array.isArray(type) ? type : [type];
 
 //       let allTypes = [];
@@ -667,7 +664,7 @@ const getPokemonDetail = async (id) => {
 //   } catch (error) {
 //     throw new Error(`Error creating a new Pokemon: ${error.message}`);
 //   }
-// };
+// };  No muestra Types
 
 //----------------------------------------------------------------------------
 
@@ -698,14 +695,13 @@ const getPokemonDetail = async (id) => {
 //   };
 //   let allTypes = [];
 //   for (const typeName of type) {
-//     //recorro el arreglo que llega por el post
-//     const newType = await Type.findOne({ where: { name: typeName } }); //busco los valores de dicho arreglo en el modelo
-//     allTypes.push(newType); //los almaceno en un arreglo
+//     const newType = await Type.findOne({ where: { name: typeName } }); 
+//     allTypes.push(newType);
 //   }
-//   const newPokemon = await Pokemon.create(objPokemon); // crea el nuevo pokemon
-//   await newPokemon.addTypes(allTypes); // asigna los tipos al nuevo pokemon
+//   const newPokemon = await Pokemon.create(objPokemon);
+//   await newPokemon.addTypes(allTypes);
 //   return newPokemon;
-// };
+// }; No muestra Types
 
 //---------------------------------------------------------------------------
 
@@ -736,16 +732,16 @@ const createPokemon = async ({
   };
   let allTypes = [];
   for (const typeName of type) {
-    // Recorro el arreglo que llega por el post
-    const newType = await Type.findOne({ where: { name: typeName } }); // Busco los valores de dicho arreglo en el modelo
+    
+    const newType = await Type.findOne({ where: { name: typeName } }); 
     if (newType) {
-      allTypes.push(newType.id); // Almaceno solo los identificadores (id) de los tipos en el arreglo
+      allTypes.push(newType.id); 
     }
   }
-  const newPokemon = await Pokemon.create(objPokemon); // Crea el nuevo pokemon
-  await newPokemon.addTypes(allTypes); // Asigna los tipos al nuevo pokemon
+  const newPokemon = await Pokemon.create(objPokemon);
+  await newPokemon.addTypes(allTypes);
   return newPokemon;
-};
+};  /*No muestra types*/
 
 
 

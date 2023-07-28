@@ -1,7 +1,60 @@
 .Card {
-    flex: 0 0 200px; /* Set a fixed width for each card */
-    height: 300px;
-    margin: 16px;
-    text-align: center;
-    background-color: #686767;
-  }
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  width: 250px;
+  height: 350px;
+  margin: 16px;
+  text-align: center;
+  background-color: #686767;
+  transition: transform 0.3s ease;
+}
+
+.Card:hover {
+  transform: translateY(-5px);
+}
+
+.Card-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.Card-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.Card-type {
+  font-size: 16px;
+  color: #888888;
+  margin-bottom: 8px;
+}
+
+.Card-link {
+  text-decoration: none;
+}
+
+.Card-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+
+.Card-button:hover {
+  background-color: #0056b3;
+}
+
