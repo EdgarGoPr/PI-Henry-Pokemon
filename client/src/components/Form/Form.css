@@ -1,0 +1,79 @@
+.form-container {
+  display: flex;
+  align-items: flex-start;
+  height: 100vh;
+}
+
+.top-left {
+  margin-top: 10px;
+  margin-left: 10px;
+  align-self: flex-start;
+}
+
+.inputs {
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs input {
+  width: 700px;
+  height: 40px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.inputs input::placeholder {
+  font-size: 16px;
+}
+
+.buttons-container {
+  margin-top: 170px;
+  margin-left: auto;
+  margin-right: 200px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.buttons > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.create-button {
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.roundButton {
+  border-radius: 50%;
+}
+
+.selectButton {
+  height: 30px;
+  width: 30px;
+  background-color: #ccc;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.selectButton:hover {
+  background-color: #999;
+}
+
+.selectButton.active {
+  background-color: green;
+}
+
