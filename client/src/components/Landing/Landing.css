@@ -1,0 +1,30 @@
+.FondoLanding {
+  background-image: url('./Bulbasaurcito2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Enter {
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(87, 87, 87, 0.521);
+  color: white;
+  font-size: 24px;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.Enter:hover {
+  transform: scale(1.2);
+}
+
+.Enter:active {
+  transform: scale(0.75);
+}

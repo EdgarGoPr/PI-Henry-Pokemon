@@ -19,11 +19,11 @@ const { Pokemon, Type } = require("../db");
 const getAllPokemons = async () => {
   try {
     const apiResponse = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?limit=9"
+      "https://pokeapi.co/api/v2/pokemon?limit=13"
     );
     const apiPokemons = apiResponse.data.results.map(async (pokemon) => {
       const response = await axios.get(pokemon.url);
-      return formatCard(response.data);
+      return formatCard(response.data, "API");
     });
 
     const dbPokemons = await Pokemon.findAll({
@@ -35,7 +35,7 @@ const getAllPokemons = async () => {
       ],
     });
     const formattedDbPokemons = dbPokemons.map((pokemon) =>
-      formatCard(pokemon)
+      formatCard(pokemon, "Database")
     );
 
     const allPokemons = [
@@ -192,6 +192,8 @@ const getPokemonDetail = async (id) => {
 //   }
 // };
 
+//-----------------------------------------------------------------------------
+
 // const createPokemon = async (pokemonData) => {
 //   try {
 //     // Check if the Pokemon already exists
@@ -221,6 +223,8 @@ const getPokemonDetail = async (id) => {
 //     throw new Error(`Error creating a new Pokemon: ${error.message}`);
 //   }
 // };
+
+//---------------------------------------------------------------------------------
 
 // const createPokemon = async (pokemonData) => {
 //   // let typeOfPokemon = [];
@@ -258,9 +262,11 @@ const getPokemonDetail = async (id) => {
 //   }
 // };
 
-//* const createPokemon = async ({pokemonData}) => {
+//---------------------------------------------------------------------------
+
+// const createPokemon = async ({ pokemonData }) => {
 //   try {
-//     const existingPokemon = await Pokemon.findByPk(pokemonData.id);
+//     const existingPokemon = await Pokemon.findByPk(pokemonData.name);
 
 //     if (!existingPokemon) {
 //       const typeOfPokemon = pokemonData.type;
@@ -468,17 +474,15 @@ const getPokemonDetail = async (id) => {
 //         weight,
 //       });
 
-//       const [existingType, created] = await Type.findOrCreate({
-//         where: { name: type },
-//       });
+//       let allTypes = [];
+//       for (const typeName of type) {
+//         const newType = await Type.findOrCreate({ where: { name: typeName } });
+//         if (newType) {
+//           allTypes.push(newType);
+//         }
+//       }
 
-//       await newPokemon.addType(existingType);
-
-//       const types = await newPokemon.getTypes();
-//       const typesArray = types.map((type) => type.name);
-
-//       // Agregar el array de tipos al nuevo Pokémon
-//       newPokemon.dataValues.types = typesArray;
+//       await newPokemon.addTypes(allTypes);
 
 //       return newPokemon;
 //     } else {
@@ -490,66 +494,68 @@ const getPokemonDetail = async (id) => {
 // };
 
 //--------------------------------------------------------------------
-const createPokemon = async ({
-  name,
-  image,
-  life,
-  attack,
-  defense,
-  speed,
-  height,
-  weight,
-  type,
-}) => {
-  try {
-    const existingPokemon = await Pokemon.findOne({ where: { name } });
 
-    if (!existingPokemon) {
-      const newPokemon = await Pokemon.create({
-        name,
-        image,
-        life,
-        attack,
-        defense,
-        speed,
-        height,
-        weight,
-      });
+// const createPokemon = async ({
+//   name,
+//   image,
+//   life,
+//   attack,
+//   defense,
+//   speed,
+//   height,
+//   weight,
+//   type,
+// }) => {
+//   try {
+//     const existingPokemon = await Pokemon.findOne({ where: { name } });
 
-      const allTypes = [];
-      for (const typeName of type) {
-        const newType = await Type.findOne({ where: { name: typeName } });
-        if (newType) {
-          allTypes.push(newType);
-        } else {
-          throw new Error(`Type "${typeName}" does not exist in the database.`);
-        }
-      }
+//     if (!existingPokemon) {
+//       const newPokemon = await Pokemon.create({
+//         name,
+//         image,
+//         life,
+//         attack,
+//         defense,
+//         speed,
+//         height,
+//         weight,
+//       });
 
-      // Asociar los tipos con el nuevo Pokémon utilizando el método adecuado según tu definición de modelo
-      await newPokemon.addTypes(allTypes);
+//       const allTypes = [];
+//       for (const typeName of type) {
+//         const newType = await Type.findOne({ where: { name: typeName } });
+//         if (newType) {
+//           allTypes.push(newType);
+//         } else {
+//           throw new Error(`Type "${typeName}" does not exist in the database.`);
+//         }
+//       }
 
-      return {
-        id: newPokemon.id,
-        name: newPokemon.name,
-        image: newPokemon.image,
-        life: newPokemon.life,
-        attack: newPokemon.attack,
-        defense: newPokemon.defense,
-        speed: newPokemon.speed,
-        height: newPokemon.height,
-        weight: newPokemon.weight,
-        type: type,
-      };
-    } else {
-      throw new Error("Pokemon already exists");
-    }
-  } catch (error) {
-    throw new Error(`Error creating a new Pokemon: ${error.message}`);
-  }
-};
+//       // Asociar los tipos con el nuevo Pokémon utilizando el método adecuado según tu definición de modelo
+//       await newPokemon.addTypes(allTypes);
+
+//       return {
+//         id: newPokemon.id,
+//         name: newPokemon.name,
+//         image: newPokemon.image,
+//         life: newPokemon.life,
+//         attack: newPokemon.attack,
+//         defense: newPokemon.defense,
+//         speed: newPokemon.speed,
+//         height: newPokemon.height,
+//         weight: newPokemon.weight,
+//         type: type,
+//       };
+//     } else {
+//       throw new Error("Pokemon already exists");
+//     }
+//   } catch (error) {
+//     throw new Error(`Error creating a new Pokemon: ${error.message}`);
+//   }
+// };
 
 //------------------------------------------------------------------------------------
+
 // const createPokemon = async ({
 //   name,
 //   image,
@@ -614,6 +620,135 @@ const createPokemon = async ({
 //     throw new Error(`Error creating a new Pokemon: ${error.message}`);
 //   }
 // };
+
+//------------------------------------------------------------------------------
+
+// const createPokemon = async ({
+//   name,
+//   image,
+//   life,
+//   attack,
+//   defense,
+//   speed,
+//   height,
+//   weight,
+//   type,
+// }) => {
+//   try {
+//     const existingPokemon = await Pokemon.findOne({ where: { name } });
+
+//     if (!existingPokemon) {
+//       const newPokemon = await Pokemon.create({
+//         name,
+//         image,
+//         life,
+//         attack,
+//         defense,
+//         speed,
+//         height,
+//         weight,
+//       });
+
+//       // Ensure type is an array even if only one type is provided as a string
+//       const typesArray = Array.isArray(type) ? type : [type];
+
+//       let allTypes = [];
+//       for (const typeName of typesArray) {
+//         const [newType] = await Type.findOne({ where: { name: typeName } });
+//         allTypes.push(newType);
+//       }
+
+//       await newPokemon.addTypes(allTypes);
+
+//       return newPokemon;
+//     } else {
+//       throw new Error("Pokemon already exists");
+//     }
+//   } catch (error) {
+//     throw new Error(`Error creating a new Pokemon: ${error.message}`);
+//   }
+// };
+
+//----------------------------------------------------------------------------
+
+// const createPokemon = async ({
+//   id,
+//   name,
+//   image,
+//   life,
+//   attack,
+//   defense,
+//   speed,
+//   height,
+//   weight,
+//   type,
+// }) => {
+//   console.log(name);
+//   let objPokemon = {
+//     id,
+//     name,
+//     image,
+//     life,
+//     attack,
+//     defense,
+//     speed,
+//     height,
+//     weight,
+//     type,
+//   };
+//   let allTypes = [];
+//   for (const typeName of type) {
+//     //recorro el arreglo que llega por el post
+//     const newType = await Type.findOne({ where: { name: typeName } }); //busco los valores de dicho arreglo en el modelo
+//     allTypes.push(newType); //los almaceno en un arreglo
+//   }
+//   const newPokemon = await Pokemon.create(objPokemon); // crea el nuevo pokemon
+//   await newPokemon.addTypes(allTypes); // asigna los tipos al nuevo pokemon
+//   return newPokemon;
+// };
+
+//---------------------------------------------------------------------------
+
+const createPokemon = async ({
+  id,
+  name,
+  image,
+  life,
+  attack,
+  defense,
+  speed,
+  height,
+  weight,
+  type,
+}) => {
+  console.log(name);
+  let objPokemon = {
+    id,
+    name,
+    image,
+    life,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+    type,
+  };
+  let allTypes = [];
+  for (const typeName of type) {
+    // Recorro el arreglo que llega por el post
+    const newType = await Type.findOne({ where: { name: typeName } }); // Busco los valores de dicho arreglo en el modelo
+    if (newType) {
+      allTypes.push(newType.id); // Almaceno solo los identificadores (id) de los tipos en el arreglo
+    }
+  }
+  const newPokemon = await Pokemon.create(objPokemon); // Crea el nuevo pokemon
+  await newPokemon.addTypes(allTypes); // Asigna los tipos al nuevo pokemon
+  return newPokemon;
+};
+
+
+
 
 module.exports = {
   getAllPokemons,

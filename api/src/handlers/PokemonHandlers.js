@@ -4,6 +4,22 @@ const {
   getPokemonDetail,
   createPokemon,
 } = require("../controllers/PokemonsController");
+const sortPokemonsByName = require("../controllers/Filter_Order_Paginate");
+
+// const getPokemons = async (req, res) => {
+//   try {
+//     const { name } = req.query;
+//     if (name) {
+//       const pokemons = await getPokemonName(name);
+//       return res.json(pokemons);
+//     } else {
+//       const pokemons = await getAllPokemons();
+//       return res.json(pokemons);
+//     }
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };
 
 const getPokemons = async (req, res) => {
   try {
@@ -19,6 +35,7 @@ const getPokemons = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 const pokemonDetail = async (req, res) => {
   const { id } = req.params;
@@ -44,29 +61,47 @@ const pokemonCreado = async (req, res) => {
   }
 };
 
-const filterPokemonsByType = (pokemons, type) => {
-  if (type) {
-    return pokemons.filter((pokemon) =>
-      pokemon.types.includes(type.toLowerCase())
-    );
+
+
+const getByType = async (req, res) => {
+  const { type } = req.query;
+
+  if (!type) {
+    return res.status(400).json({ error: "Type parameter is required" });
   }
-  return pokemons;
+
+  try {
+    const byType = await getPokemonByType(type);
+    res.json(byType);
+  } catch (error) {
+    console.error("Error retrieving Pokemon by type:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
-const sortPokemonsByName = (pokemons) => {
-  return pokemons.slice().sort((a, b) => a.name.localeCompare(b.name));
+const order = async (req, res) => {
+  const { sort } = req.query;
+  let sortOrder;
+
+  if (sort === 'desc') {
+    sortOrder = 'desc';
+  } else {
+    sortOrder = 'asc';
+  }
+
+  try {
+    const ordenado = await sortPokemonsByName(sortOrder);
+    res.json(ordenado);
+  } catch (error) {
+    console.error('Error ordering Pokémon:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
-const paginatePokemons = (pokemons, page, pageSize) => {
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = page * pageSize;
-  return pokemons.slice(startIndex, endIndex);
-};
 module.exports = {
   getPokemons,
   pokemonDetail,
   pokemonCreado,
-  filterPokemonsByType,
-  sortPokemonsByName,
-  paginatePokemons,
+  getByType,
+  order
 };

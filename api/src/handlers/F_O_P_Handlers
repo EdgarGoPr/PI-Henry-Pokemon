@@ -1,0 +1,15 @@
+const getPokemonByType = require("../controllers/Filter_Order_Paginate");
+
+const getByType = async (req, res) => {
+  const { type } = req.query;
+
+  try {
+    const byType = await getPokemonByType(type);
+    res.json(byType);
+  } catch (error) {
+    console.error("Error retrieving Pokemon types:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = { getByType };

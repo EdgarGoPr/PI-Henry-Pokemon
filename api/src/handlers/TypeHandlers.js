@@ -1,4 +1,4 @@
-const getTypes = require("../controllers/TypeController");
+const { getTypes } = require("../controllers/TypeController");
 
 const types = async (req, res) => {
   try {
