@@ -1,0 +1,7 @@
+.Card {
+    flex: 0 0 200px; /* Set a fixed width for each card */
+    height: 300px;
+    margin: 16px;
+    text-align: center;
+    background-color: #686767;
+  }

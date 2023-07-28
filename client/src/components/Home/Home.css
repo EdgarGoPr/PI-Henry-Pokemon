@@ -65,6 +65,7 @@
   margin: 16px;
   text-align: center;
   background-color: #686767;
+  flex: 0 0 calc(33.33% - 32px);
 }
 
 .Card img {
