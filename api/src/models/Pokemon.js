@@ -1,50 +1,47 @@
 const { DataTypes } = require("sequelize");
 
-// Exportamos una función que define el modelo
-// Luego le inyectamos la conexión a Sequelize.
 module.exports = (sequelize) => {
-  // Definimos el modelo
   const Pokemon = sequelize.define(
     "Pokemon",
     {
       id: {
-        type: DataTypes.UUID, // Tipo de dato: UUID (identificador único universal)
-        defaultValue: DataTypes.UUIDV4, // Valor predeterminado: Genera un UUID único para cada registro
-        primaryKey: true, // Clave primaria
+        type: DataTypes.UUID, 
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
         allowNull: false,
       },
       name: {
-        type: DataTypes.STRING, // Tipo de dato: Cadena de texto
-        allowNull: false, // No puede ser nulo
+        type: DataTypes.STRING,
+        allowNull: false,
         unique: true
       },
       image: {
-        type: DataTypes.STRING, // Tipo de dato: Cadena de texto
-        allowNull: false, // No puede ser nulo
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       life: {
-        type: DataTypes.INTEGER, // Tipo de dato: Número entero
-        allowNull: false, // No puede ser nulo
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       attack: {
-        type: DataTypes.INTEGER, // Tipo de dato: Número entero
-        allowNull: false, // No puede ser nulo
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       defense: {
-        type: DataTypes.INTEGER, // Tipo de dato: Número entero
-        allowNull: false, // No puede ser nulo
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       speed: {
-        type: DataTypes.INTEGER, // Tipo de dato: Número entero
-        allowNull: true, // Puede ser nulo
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       height: {
-        type: DataTypes.FLOAT, // Tipo de dato: Número de punto flotante
-        allowNull: true, // Puede ser nulo
+        type: DataTypes.FLOAT,
+        allowNull: true,
       },
       weight: {
-        type: DataTypes.FLOAT, // Tipo de dato: Número de punto flotante
-        allowNull: true, // Puede ser nulo
+        type: DataTypes.FLOAT,
+        allowNull: true,
       },
     },
     { timestamps: false }

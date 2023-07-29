@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { formatPokemonData, formatCard } = require("../Utils/FormatPokemon");
+const { formatPokemonData, formatCard, formatCardDb, formatPokemonDataDb } = require("../Utils/FormatPokemon");
 const { Pokemon, Type } = require("../db");
 
 // const getAllPokemons = async () => {
@@ -17,36 +17,30 @@ const { Pokemon, Type } = require("../db");
 // };
 
 const getAllPokemons = async () => {
-  try {
-    const apiResponse = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon?limit=13"
-    );
-    const apiPokemons = apiResponse.data.results.map(async (pokemon) => {
-      const response = await axios.get(pokemon.url);
-      return formatCard(response.data, "API");
-    });
+  const apiResponse = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=13");
+  const apiPokemons = apiResponse.data.results.map(async (pokemon) => {
+    const response = await axios.get(pokemon.url);
+    return formatCard(response.data, "API");
+  });
 
-    const dbPokemons = await Pokemon.findAll({
-      include: [
-        {
-          model: Type,
-          attribute: ["name"],
-        },
-      ],
-    });
-    const formattedDbPokemons = dbPokemons.map((pokemon) =>
-      formatCard(pokemon, "Database")
-    );
+  const dbPokemons = await Pokemon.findAll({
+    include: [
+      {
+        model: Type,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    ],
+  });
 
-    const allPokemons = [
-      ...formattedDbPokemons,
-      ...(await Promise.all(apiPokemons)),
-    ];
-    return allPokemons;
-  } catch (error) {
-    throw new Error(`Error fetching Pokemons: ${error.message}`);
-  }
+  const formattedDbPokemons = dbPokemons.map((pokemon) =>
+    formatCardDb(pokemon, "Database")
+  );
+
+  const allPokemons = [...formattedDbPokemons, ...(await Promise.all(apiPokemons))];
+  return allPokemons;
 };
+
 
 // const getPokemonName = async (name) => {
 //   try {
@@ -153,7 +147,7 @@ const getPokemonDetail = async (id) => {
       if (!dbPokemon) {
         throw new Error(`Pokemon with ID ${id} not found in the database.`);
       }
-      const formattedPokemon = formatPokemonData(dbPokemon);
+      const formattedPokemon = formatPokemonDataDb(dbPokemon);
       return formattedPokemon;
     } catch (error) {
       throw new Error(
@@ -705,6 +699,56 @@ const getPokemonDetail = async (id) => {
 
 //---------------------------------------------------------------------------
 
+// const createPokemon = async ({
+//   id,
+//   name,
+//   image,
+//   life,
+//   attack,
+//   defense,
+//   speed,
+//   height,
+//   weight,
+//   type,
+// }) => {
+//   let objPokemon = {
+//     id,
+//     name,
+//     image,
+//     life,
+//     attack,
+//     defense,
+//     speed,
+//     height,
+//     weight,
+//   };
+//   // const newPokemon = await Pokemon.create(objPokemon)
+//   // const foundTypes = await Type.findAll({ where: { name: type } })
+//   // if (foundTypes.length > 0) {
+//   //   await newPokemon.setTypes(foundTypes)
+//   // }
+//   // console.log(newPokemon)
+//   // return newPokemon;
+//   const newPokemon = await Pokemon.create(objPokemon);
+
+//   const foundTypes = await Type.findAll({ where: { name: type } });
+
+//   if (foundTypes.length > 0) {
+//     await newPokemon.setTypes(foundTypes);
+//   }
+
+//   // Fetch the newly created Pokemon with the associated types
+//   const fetchedPokemon = await Pokemon.findOne({
+//     where: { id: newPokemon.id },
+//     include: Type,
+//   });
+
+//   console.log(fetchedPokemon);
+//   return fetchedPokemon;
+// };
+
+//-----------------------------------------------------------------------------
+
 const createPokemon = async ({
   id,
   name,
@@ -717,7 +761,6 @@ const createPokemon = async ({
   weight,
   type,
 }) => {
-  console.log(name);
   let objPokemon = {
     id,
     name,
@@ -728,22 +771,36 @@ const createPokemon = async ({
     speed,
     height,
     weight,
-    type,
   };
-  let allTypes = [];
-  for (const typeName of type) {
-    
-    const newType = await Type.findOne({ where: { name: typeName } }); 
-    if (newType) {
-      allTypes.push(newType.id); 
-    }
+
+  const foundTypes = await Type.findAll({ where: { name: type } });
+
+  if (foundTypes.length > 0) {
+    const newPokemon = await Pokemon.create(objPokemon);
+    await newPokemon.setTypes(foundTypes);
+
+    const typeNames = foundTypes.map((foundType) => foundType.name);
+
+    const fetchedPokemon = {
+      id: newPokemon.id,
+      name: newPokemon.name,
+      image: newPokemon.image,
+      life: newPokemon.life,
+      attack: newPokemon.attack,
+      defense: newPokemon.defense,
+      speed: newPokemon.speed,
+      height: newPokemon.height,
+      weight: newPokemon.weight,
+      type: typeNames,
+    };
+
+    console.log(fetchedPokemon);
+    return fetchedPokemon;
+  } else {
+    console.error("Unable to find the specified types.");
+    return null;
   }
-  const newPokemon = await Pokemon.create(objPokemon);
-  await newPokemon.addTypes(allTypes);
-  return newPokemon;
-};  /*No muestra types*/
-
-
+};
 
 
 module.exports = {
