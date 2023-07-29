@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cards from "../Cards/Cards";
 import { fetchPokemons, orderCards } from "../../Redux/Actions";
 import SearchBar from "../Search/SearchBar";
-import Select from 'react-select'
+import Select from "react-select";
 import "./Home.css";
 
 export default function Home() {
@@ -33,7 +33,8 @@ export default function Home() {
         <Link to="/" className="HomeButton">
           <button className="Inicio">Inicio</button>
         </Link>
-        <div className="FilterBar">
+        <div className="FilterBar">Filter Bar</div>
+        <div className="SortBar">
           <Select
             options={sortOptions}
             value={{
@@ -43,7 +44,6 @@ export default function Home() {
             onChange={handleOrder}
           />
         </div>
-        <div className="SortBar">Barras de ordenado</div>
         <SearchBar />
         <Link to="/pokemons/create" className="CreateButton">
           <button>Crear Pokemon</button>

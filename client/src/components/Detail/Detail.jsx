@@ -50,7 +50,8 @@ export default function Detail() {
               </div>
             </div>
             <h3 className="type">
-              TYPE: {pokemonDetail.type[0]}, {pokemonDetail.type[1]}
+              TYPE:  {pokemonDetail.type[0]}{" "}
+              {pokemonDetail.type[1] && `, ${pokemonDetail.type[1]}`}
             </h3>
           </div>
         </div>
