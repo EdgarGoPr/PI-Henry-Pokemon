@@ -6,7 +6,7 @@ export default function Landing() {
   return (
     <div className = 'FondoLanding'>
       <Link to="/pokemons">
-        <button className="Enter">Enter a new world</button>
+        <button className="Enter"></button>
       </Link>
     </div>
   );

@@ -1,30 +1,50 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../Cards/Cards";
-import { fetchPokemons } from "../../Redux/Actions"; // Asegúrate de importar la acción correctamente
-
+import { fetchPokemons, orderCards } from "../../Redux/Actions";
+import SearchBar from "../Search/SearchBar";
+import Select from 'react-select'
 import "./Home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
-
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
     dispatch(fetchPokemons());
   }, [dispatch]);
 
-  console.log(pokemons)
+  const handleOrder = (option) => {
+    const finalOrder = option.value;
+    dispatch(orderCards(finalOrder));
+    setSortOrder(finalOrder);
+  };
+
+  const sortOptions = [
+    { value: "asc", label: "Ascending" },
+    { value: "des", label: "Descending" },
+  ];
+
   return (
     <div>
       <div className="Nav">
         <Link to="/" className="HomeButton">
           <button className="Inicio">Inicio</button>
         </Link>
-        <div className="FilterBar">Barras de filtros</div>
+        <div className="FilterBar">
+          <Select
+            options={sortOptions}
+            value={{
+              value: sortOrder,
+              label: sortOrder === "asc" ? "Ascending" : "Descending",
+            }}
+            onChange={handleOrder}
+          />
+        </div>
         <div className="SortBar">Barras de ordenado</div>
-        <input type="text" placeholder="Buscar" className="SearchBar" />
+        <SearchBar />
         <Link to="/pokemons/create" className="CreateButton">
           <button>Crear Pokemon</button>
         </Link>
@@ -39,4 +59,3 @@ export default function Home() {
     </div>
   );
 }
-

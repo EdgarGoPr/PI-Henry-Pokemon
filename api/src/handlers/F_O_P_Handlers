@@ -1,4 +1,4 @@
-const getPokemonByType = require("../controllers/Filter_Order_Paginate");
+const { sortPokemonsByName } = require("../controllers/Filter_Order_Paginate");
 
 const getByType = async (req, res) => {
   const { type } = req.query;
@@ -12,4 +12,14 @@ const getByType = async (req, res) => {
   }
 };
 
-module.exports = { getByType };
+const handleSortPokemons = async (req, res) => {
+  const sortOrder = req.query.sortOrder
+  try {
+    const sorted = await sortPokemonsByName(sortOrder)
+    res.json(sorted)
+  } catch (error) {
+    res.status(400).json({ error: 'Error sorting pokemons' })
+  }
+}
+
+module.exports = { getByType, handleSortPokemons };

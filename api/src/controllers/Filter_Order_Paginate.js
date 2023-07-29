@@ -14,22 +14,19 @@ const getPokemonByType = async (type) => {
 };
 
 const sortPokemonsByName = async (sortOrder = 'asc') => {
-  try {
-    const allPokemons = await getAllPokemons();
-    const sortedPokemons = allPokemons.slice().sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.name - b.name;
-      } else if (sortOrder === 'desc') {
-        return b.name - a.name;
-      } else {
-        throw new Error('Invalid sort order');
-      }
-    });
-    return sortedPokemons;
-  } catch (error) {
-    throw new Error('Error sorting Pokémon by name: ' + error.message);
-  }
+  const allPokemons = await getAllPokemons();
+  const sortedPokemons = allPokemons.slice().sort((a, b) => {
+    if (sortOrder === 'asc') {
+      return a.name.localeCompare(b.name);
+    } else if (sortOrder === 'desc') {
+      return b.name.localeCompare(a.name);
+    } else {
+      throw new Error('Invalid sort order');
+    }
+  });
+  return sortedPokemons;
 };
+
 
 const paginatePokemons = (pokemons, page, pageSize) => {
   const startIndex = (page - 1) * pageSize;

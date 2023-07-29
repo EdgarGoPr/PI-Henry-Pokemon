@@ -2,17 +2,15 @@ const {
   getPokemons,
   pokemonDetail,
   pokemonCreado,
-  getByType,
-  order
+  handleSortPokemons
 } = require("../handlers/PokemonHandlers");
 
 
 const pokemonRoute = require("express").Router();
 
 pokemonRoute.get("/", getPokemons);
-pokemonRoute.get("/:id", pokemonDetail);
+pokemonRoute.get("/detail/:id", pokemonDetail);
 pokemonRoute.post("/", pokemonCreado);
-pokemonRoute.get('/', getByType);
-pokemonRoute.get('/', order)
+pokemonRoute.get('/sort', handleSortPokemons)
 
 module.exports = pokemonRoute;

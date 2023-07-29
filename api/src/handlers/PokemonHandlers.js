@@ -79,29 +79,20 @@ const getByType = async (req, res) => {
   }
 };
 
-const order = async (req, res) => {
-  const { sort } = req.query;
-  let sortOrder;
-
-  if (sort === 'desc') {
-    sortOrder = 'desc';
-  } else {
-    sortOrder = 'asc';
-  }
-
+const handleSortPokemons = async (req, res) => {
+  const { sortOrder } = req.query
   try {
-    const ordenado = await sortPokemonsByName(sortOrder);
-    res.json(ordenado);
+    const sorted = await sortPokemonsByName(sortOrder)
+    res.json(sorted)
   } catch (error) {
-    console.error('Error ordering Pokémon:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(400).json({ error: 'Error sorting pokemons' })
   }
-};
+}
 
 module.exports = {
   getPokemons,
   pokemonDetail,
   pokemonCreado,
   getByType,
-  order
+  handleSortPokemons
 };

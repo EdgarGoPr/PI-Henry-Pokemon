@@ -13,7 +13,7 @@ export default function Detail() {
     const getPokemonDetail = async (id) => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/pokemons/${id}`
+          `http://localhost:3001/pokemons/detail/${id}`
         );
         setPokemonDetail(response.data);
       } catch (error) {

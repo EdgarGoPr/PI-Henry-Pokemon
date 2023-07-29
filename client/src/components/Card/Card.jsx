@@ -10,7 +10,7 @@ export default function Card(data) {
       <h2 className="Card-name">{data.name}</h2>
       <p className="Card-type">{data.type[0]}</p>
       <p className="Card-type">{data.type[1]}</p>
-      <Link to={`/pokemons/${data.id}`} className="Card-link">
+      <Link to={`/pokemons/detail/${data.id}`} className="Card-link">
         <button className="Card-button">+</button>
       </Link>
     </div>
