@@ -1,4 +1,6 @@
-import { FILTER, ORDER, RESET, FETCH, TYPES, CREATE } from "./ActionType";
+// Reducer.js
+
+import { ORDER, RESET, FETCH, TYPES, CREATE, FETCH_FILTERED, FILTER_CARDS } from "./ActionType";
 
 const initialState = {
   pokemons: [],
@@ -8,35 +10,45 @@ const initialState = {
 
 export default function rootReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case FILTER_CARDS:
+      const filteredPokemons = state.pokemons.filter(pokemon => pokemon.type === payload);
+      return {
+        ...state,
+        pokemons: filteredPokemons,
+      };
     case CREATE:
       return {
         ...state,
         pokemons: payload,
-      }
+      };
     case TYPES:
       return {
         ...state,
-        types: payload
-      }
-    case FILTER:
-      const newFilter = state.pokemonsOrigin.filter(
-        (pk) => pk.type === payload
-      );
+        types: payload,
+      };
+    case FETCH_FILTERED:
       return {
         ...state,
-        pokemons: newFilter,
+        pokemons: payload,
       };
     case RESET:
       return {
         ...state,
         pokemons: [...state.pokemonsOrigin],
       };
-      case ORDER:
-        const sortedPokemons = payload === "asc" ? state.pokemonsOrigin : state.pokemonsOrigin.slice().reverse();
-        return {
-          ...state,
-          pokemons: sortedPokemons,
-        };
+    case ORDER:
+      let sortedPokemons;
+      if (payload === "asc") {
+        sortedPokemons = state.pokemonsOrigin.slice().sort((a, b) => a.name.localeCompare(b.name));
+      } else if (payload === "desc") {
+        sortedPokemons = state.pokemonsOrigin.slice().sort((a, b) => b.name.localeCompare(a.name));
+      } else {
+        sortedPokemons = state.pokemonsOrigin;
+      }
+      return {
+        ...state,
+        pokemons: sortedPokemons,
+      };
     case FETCH:
       return {
         ...state,

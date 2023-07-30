@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./Card.css";
 
 export default function Card(data) {
-  console.log(data.id);
   return (
     <div className="Card" key={data.id}>
       <img className="Card-image" src={data.image} alt={data.name} />

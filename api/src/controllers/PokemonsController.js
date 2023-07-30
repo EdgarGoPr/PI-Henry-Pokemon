@@ -41,6 +41,31 @@ const getAllPokemons = async () => {
   return allPokemons;
 };
 
+const sortPokemonsByName = async (sort = 'asc', pokemons) => {
+  const allPokemons = await pokemons;
+  const sortedPokemons = allPokemons.slice().sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+
+    if (sort === 'asc') {
+      return nameA.localeCompare(nameB);
+    } else if (sort === 'desc') {
+      return nameB.localeCompare(nameA);
+    } else {
+      throw new Error('Invalid sort order');
+    }
+  });
+  return sortedPokemons;
+};
+
+const getPokemonByType = async (type, pokemons) => {
+  const allPokemons = await pokemons;
+  const filteredPokemons = allPokemons.filter((pokemon) =>
+    pokemon.type.includes(type.toLowerCase())
+  );
+
+  return filteredPokemons;
+};
 
 // const getPokemonName = async (name) => {
 //   try {
@@ -808,4 +833,6 @@ module.exports = {
   getPokemonName,
   getPokemonDetail,
   createPokemon,
+  sortPokemonsByName,
+  getPokemonByType,
 };

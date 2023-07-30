@@ -1,7 +1,6 @@
-/* .Nav {
-  position: fixed;
+.Nav {
+  position: sticky;
   top: 0;
-  left: 0;
   background-color: rgb(75, 199, 116);
   height: 60px;
   width: 100%;
@@ -9,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  z-index: 999; /* Set a high z-index value to ensure it appears in front of other elements */
 }
 
 .Nav a {
@@ -36,18 +36,6 @@
   padding: 8px 20px;
   border: none;
   cursor: pointer;
-  border-radius: 5px; 
-  margin-right: 70px; 
-} */
-
-.Content {
-  margin-top: 60px; 
+  border-radius: 5px;
+  margin-right: 70px;
 }
-
-.ContentContainer {
-  margin-top: 60px;
-}
-
-
-
-
