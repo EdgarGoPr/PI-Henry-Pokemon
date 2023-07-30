@@ -5,6 +5,7 @@ const {
   createPokemon,
   sortPokemonsByName,
   getPokemonByType,
+  paginatePokemons,
 } = require("../controllers/PokemonsController");
 
 // const getPokemons = async (req, res) => {
@@ -24,7 +25,7 @@ const {
 
 const getPokemons = async (req, res) => {
   try {
-    const { name, sort, type } = req.query;
+    const { name, sort, type, page, pageSize } = req.query;
     if (name) {
       const pokemons = await getPokemonName(name);
       return res.json(pokemons);
@@ -42,7 +43,12 @@ const getPokemons = async (req, res) => {
       pokemons = await getPokemonByType(type, pokemons);
       // return res.json(byType);
     }
-    return res.json(pokemons);
+    const totalPokemons = pokemons.length
+    console.log(totalPokemons)
+
+    const paginatedPokemons = paginatePokemons(pokemons, page, pageSize);
+
+    return res.json({ totalPokemons, data: paginatedPokemons });
 
   } catch (error) {
     res.status(400).json({ error: error.message });

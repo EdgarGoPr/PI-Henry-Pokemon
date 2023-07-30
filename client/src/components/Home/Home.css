@@ -1,51 +1,26 @@
-/* .Nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgb(75, 199, 116);
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-
-.Nav a {
-  color: white;
-  text-decoration: none;
-}
-
-.FilterBar,
-.SortBar {
-  background-color: lightgray;
-  padding: 8px;
-}
-
-.SearchBar {
-  padding: 8px;
-}
-
-.Nav .HomeButton {
-  margin-left: 50px;
-}
-
-.CreateButton {
-  background-color: blue;
-  color: white;
-  padding: 8px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px; 
-  margin-right: 70px; 
-} */
-
 .Content {
   margin-top: 60px; 
 }
 
 .ContentContainer {
   margin-top: 60px;
+}
+.pagination-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-buttons button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.pagination-buttons button.active {
+  background-color: #ccc;
 }
 
 

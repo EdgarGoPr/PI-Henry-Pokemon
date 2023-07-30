@@ -7,8 +7,12 @@ import {
   reset,
   fetchFilteredPokemons,
   getTypes,
+  setPage,
+  setPageSize,
+  // fetchEditedPokemons
 } from "../../Redux/Actions";
 import Nav from "../Nav/Nav";
+import PaginationButtons from "../../Utils/Paginate";
 import "./Home.css";
 
 export default function Home() {
@@ -17,9 +21,24 @@ export default function Home() {
   const types = useSelector((state) => state.types);
   const [sortOrder, setSortOrder] = useState(null);
   const [sortFilter, setSortFilter] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 12;
+  const [totalPages, setTotalPages] = useState(1);
+  const totalPokemonsCount = useSelector((state) => state.totalPokemonsCount);
 
   useEffect(() => {
-    dispatch(fetchPokemons());
+    dispatch(fetchPokemons(currentPage, pageSize));
+  }, [dispatch, currentPage, pageSize]);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(parseInt(totalPokemonsCount, 10) / pageSize));
+    // console.log(totalPokemonsCount)
+  }, [totalPokemonsCount, pageSize]);
+
+  // console.log('PK After useEffect', pokemons)
+
+  useEffect(() => {
+    dispatch(getTypes());
   }, [dispatch]);
 
   useEffect(() => {
@@ -27,17 +46,15 @@ export default function Home() {
   }, [dispatch]);
 
   const handleFilter = (event) => {
-    // console.log("handleFilter called");
     const finalFilter = event.value;
     if (finalFilter === "reset" || finalFilter === "") {
       dispatch(reset());
-      setSortFilter("reset")
+      setSortFilter("reset");
     } else {
-      // console.log("Dispatching filterCards action");
-      dispatch(fetchFilteredPokemons(finalFilter));
+      dispatch(fetchFilteredPokemons(finalFilter, currentPage, pageSize));
       setSortFilter(finalFilter);
     }
-    console.log(pokemons)
+    // console.log(pokemons);
   };
 
   const handleOrder = (option) => {
@@ -46,8 +63,12 @@ export default function Home() {
       dispatch(reset());
       setSortOrder("reset");
     }
-    dispatch(orderCards(finalOrder));
+    dispatch(orderCards(finalOrder, currentPage, pageSize));
     setSortOrder(finalOrder);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   const sortOptionsF = [
@@ -77,6 +98,11 @@ export default function Home() {
         ) : (
           <p>Loading...</p>
         )}
+        <PaginationButtons
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
