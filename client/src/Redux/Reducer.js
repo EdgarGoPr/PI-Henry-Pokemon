@@ -9,9 +9,12 @@ const initialState = {
   page: 1,
   pageSize: 12,
   totalPokemonsCount: 0,
+  sort: null,
+  tipo: null,
+  source: null,
 };
 
-export default function rootReducer(state = initialState, { totalPokemonsCount, type, payload }) {
+export default function rootReducer(state = initialState, { source, sort, tipo, totalPokemonsCount, type, payload }) {
   switch (type) {
     case CREATE:
       return {
@@ -42,7 +45,10 @@ export default function rootReducer(state = initialState, { totalPokemonsCount, 
       return {
         ...state,
         pokemons: payload,
-        totalPokemonsCount: totalPokemonsCount
+        totalPokemonsCount: totalPokemonsCount,
+        tipo: tipo,
+        sort: sort,
+        source: source,
       };
     case SET_PAGE:
       return {

@@ -5,13 +5,23 @@ import SearchBar from "../Search/SearchBar";
 
 import "./Nav.css";
 
-const Nav = ({ sortOptions, sortOrder, handleOrder, sortOptionsF, sortFilter, handleFilter }) => {
+const Nav = ({ sourceOptions, handleFilterSource, sortOptions, sortOrder, handleOrder, sortOptionsF, sortFilter, handleFilter, }) => {
 
   return (
     <div className="Nav">
       <Link to="/" className="HomeButton">
         <button className="Inicio">Inicio</button>
       </Link>
+      <div className="FilterBar">
+        <Select
+          options={sourceOptions}
+          value={
+            sourceOptions.find((option) => option.value === sortFilter) ||
+            sourceOptions[0]
+          }
+          onChange={(event) => handleFilterSource(event)}
+        />
+      </div>
       <div className="FilterBar">
         <Select
           options={sortOptionsF}

@@ -76,13 +76,16 @@ function formatCard(pokemon) {
     return null;
   }
 
-  const { id, image, name, sprites, types } = pokemon;
+  const { id, image, name, sprites, types, attack, stats } = pokemon;
 
   const formattedCard = {
     id,
-    image: sprites?.front_default || image || "default_image_url",
+    // image: sprites?.front_default || image || "default_image_url",
+    image: sprites?.['versions']['generation-v']['black-white']['animated']['front_default'] || sprites.front_default,
     name,
+    attack: stats?.[1]?.base_stat || attack || 0,
     type: types?.map((type) => type.type.name) || [],
+    source: 'API',
   };
 
   return formattedCard;
@@ -93,13 +96,15 @@ function formatCardDb(pokemon) {
     return null;
   }
 
-  const { id, image, name, sprites, Types } = pokemon;
+  const { id, image, name, sprites, Types, attack } = pokemon;
 
   const formattedCard = {
     id,
     image: sprites?.front_default || image || "default_image_url",
     name,
+    attack: attack,
     type: Types?.map((type) => type.name) || [],
+    source: 'DB',
   };
 
   return formattedCard;

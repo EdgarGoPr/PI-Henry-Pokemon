@@ -50,6 +50,23 @@ const sortPokemonsByName = async (sort = 'asc', pokemons) => {
   return sortedPokemons;
 };
 
+const sortPokemonsByAttack = async (sort = 'max', pokemons) => {
+  const allPokemons = await pokemons;
+  const sortedPokemons = allPokemons.sort((a, b) => {
+    const attackA = a.attack;
+    const attackB = b.attack;
+
+    if (sort === 'max') {
+      return attackB - attackA;
+    } else if (sort === 'min') {
+      return attackA - attackB;
+    } else {
+      throw new Error('Invalid sort order');
+    }
+  });
+  return sortedPokemons;
+};
+
 const getPokemonByType = async (type, pokemons) => {
   const allPokemons = await pokemons;
   const filteredPokemons = allPokemons.filter((pokemon) =>
@@ -59,10 +76,23 @@ const getPokemonByType = async (type, pokemons) => {
   return filteredPokemons;
 };
 
+const getPokemonBySource = async (source = 'DB', pokemons) => {
+  const allPokemons = await pokemons;
+  if (source === 'DB') {
+    const filteredPokemons = allPokemons.filter((pokemon) =>
+      pokemon.source === 'DB');
+    return filteredPokemons;
+  } else if (source === 'API') {
+    const filteredPokemons = allPokemons.filter((pokemon) =>
+      pokemon.source === 'API');
+    return filteredPokemons;
+  }
+};
+
 const getPokemonName = async (name) => {
   try {
     const apiResponse = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?limit=9`
+      `https://pokeapi.co/api/v2/pokemon?limit=151`
     );
     const pokemonList = apiResponse.data.results;
     const filteredPokemon = pokemonList.find(
@@ -185,4 +215,6 @@ module.exports = {
   sortPokemonsByName,
   getPokemonByType,
   paginatePokemons,
+  sortPokemonsByAttack,
+  getPokemonBySource,
 };

@@ -6,6 +6,8 @@ const {
   sortPokemonsByName,
   getPokemonByType,
   paginatePokemons,
+  sortPokemonsByAttack,
+  getPokemonBySource,
 } = require("../controllers/PokemonsController");
 
 // const getPokemons = async (req, res) => {
@@ -25,23 +27,33 @@ const {
 
 const getPokemons = async (req, res) => {
   try {
-    const { name, sort, type, page, pageSize } = req.query;
+    const { name, sort, type, page, pageSize, source } = req.query;
     if (name) {
       const pokemons = await getPokemonName(name);
       return res.json(pokemons);
-
     }
     let pokemons = await getAllPokemons();
+    if(source){
+      if (source === 'DB' || source === 'API') {
+        pokemons = await getPokemonBySource(source, pokemons)
+      }
+      if (source !== 'DB' && source !== 'API') {
+        throw new Error('Invalid source');
+      }
+    }
     if (sort) {
-      if (sort !== 'asc' && sort !== 'desc') {
+      if (sort === 'max' || sort === 'min') {
+        pokemons = await sortPokemonsByAttack(sort, pokemons);
+      }
+      if (sort === 'asc' || sort === 'desc') {
+        pokemons = await sortPokemonsByName(sort, pokemons);
+      }
+      if (sort !== 'asc' && sort !== 'desc' && sort !== 'max' && sort !== 'min') {
         throw new Error('Invalid sort order');
       }
-      pokemons = await sortPokemonsByName(sort, pokemons);
-      // return res.json(sorted);
     }
     if (type) {
       pokemons = await getPokemonByType(type, pokemons);
-      // return res.json(byType);
     }
     const totalPokemons = pokemons.length
     console.log(totalPokemons)

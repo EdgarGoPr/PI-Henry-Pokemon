@@ -7,8 +7,8 @@ import {
   reset,
   fetchFilteredPokemons,
   getTypes,
-  setPage,
-  setPageSize,
+  // setPage,
+  // setPageSize,
   // fetchEditedPokemons
 } from "../../Redux/Actions";
 import Nav from "../Nav/Nav";
@@ -19,16 +19,19 @@ export default function Home() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
+  const pageSize = useSelector((state) => state.pageSize);
+  const tipo = useSelector((state) => state.tipo);
+  const sort = useSelector((state) => state.sort)
+  const totalPokemonsCount = useSelector((state) => state.totalPokemonsCount);
   const [sortOrder, setSortOrder] = useState(null);
   const [sortFilter, setSortFilter] = useState(null);
+  const [filterSource, setFilterSource] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 12;
   const [totalPages, setTotalPages] = useState(1);
-  const totalPokemonsCount = useSelector((state) => state.totalPokemonsCount);
 
   useEffect(() => {
-    dispatch(fetchPokemons(currentPage, pageSize));
-  }, [dispatch, currentPage, pageSize]);
+    dispatch(fetchPokemons(currentPage, pageSize, sortOrder, sortFilter, filterSource));
+  }, [dispatch, currentPage, pageSize, sortOrder, sortFilter, filterSource]);
 
   useEffect(() => {
     setTotalPages(Math.ceil(parseInt(totalPokemonsCount, 10) / pageSize));
@@ -41,9 +44,9 @@ export default function Home() {
     dispatch(getTypes());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getTypes());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getTypes());
+  // }, [dispatch]);
 
   const handleFilter = (event) => {
     const finalFilter = event.value;
@@ -51,10 +54,24 @@ export default function Home() {
       dispatch(reset());
       setSortFilter("reset");
     } else {
-      dispatch(fetchFilteredPokemons(finalFilter, currentPage, pageSize));
+      const pageOne = 1
+      dispatch(fetchPokemons(pageOne, pageSize, sortOrder, finalFilter, filterSource));
+      setCurrentPage(pageOne)
       setSortFilter(finalFilter);
     }
-    // console.log(pokemons);
+  };
+
+  const handleFilterSource = (event) => {
+    const finalFilter = event.value;
+    if (finalFilter === "reset" || finalFilter === "") {
+      dispatch(reset());
+      setFilterSource("reset");
+    } else {
+      const pageOne = 1
+      dispatch(fetchPokemons(pageOne, pageSize, sortOrder, sortFilter, finalFilter));
+      setCurrentPage(pageOne)
+      setFilterSource(finalFilter);
+    }
   };
 
   const handleOrder = (option) => {
@@ -63,7 +80,7 @@ export default function Home() {
       dispatch(reset());
       setSortOrder("reset");
     }
-    dispatch(orderCards(finalOrder, currentPage, pageSize));
+    dispatch(fetchPokemons(currentPage, pageSize, finalOrder, sortFilter, filterSource));
     setSortOrder(finalOrder);
   };
 
@@ -72,7 +89,7 @@ export default function Home() {
   };
 
   const sortOptionsF = [
-    { value: "reset", label: "All Types" },
+    { value: "reset", label: "Select Type" },
     ...types.map((type) => ({ value: type, label: type })),
   ];
 
@@ -80,7 +97,17 @@ export default function Home() {
     { value: "reset", label: "Select Order" },
     { value: "asc", label: "Ascending" },
     { value: "desc", label: "Descending" },
+    { value: "max", label: "Max Attack"},
+    { value: "min", label: "Min Attack"},
   ];
+
+  const sourceOptions = [
+    { value: "reset", label: "Select Source"},
+    { value: "DB", label: "Data Base"},
+    { value: "API", label: "Api"},
+  ]
+
+  // console.log('pokemons', pokemons)
 
   return (
     <div>
@@ -91,6 +118,8 @@ export default function Home() {
         sortOptionsF={sortOptionsF}
         sortFilter={sortFilter}
         handleFilter={handleFilter}
+        sourceOptions={sourceOptions}
+        handleFilterSource={handleFilterSource}
       />
       <div className="ContentContainer">
         {pokemons.length > 0 ? (
