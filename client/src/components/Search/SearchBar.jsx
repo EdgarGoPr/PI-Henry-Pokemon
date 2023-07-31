@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import './SearchBar.css'
 export default function SearchBar() {
   const [pokemonName, setPokemonName] = useState("");
   const navigate = useNavigate();
@@ -19,16 +20,16 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
-      <input
-        placeholder="Search"
-        type="search"
-        value={pokemonName}
-        onChange={handleChange}
-      />
-      <button type="button" onClick={searchPokemon}>
-        Search
-      </button>
-    </div>
+      <div className="search">
+        <input
+          className="inputSearch"
+          placeholder="Search"
+          type="search"
+          value={pokemonName}
+          onChange={handleChange}
+        />
+        <button className="searchButton" type="button" onClick={searchPokemon}>
+        </button>
+      </div>
   );
 }

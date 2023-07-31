@@ -1,0 +1,47 @@
+.search {
+  display: flex;
+}
+
+.inputSearch {
+  margin-right: 5px;
+  font-family: "Caveat", cursive;
+  font-size: 20px;
+  flex-grow: 2;
+  height: 45px;
+  padding: 5px;
+  border: 3px solid rgb(30, 48, 80);
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+/* .inputSearch:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+} */
+
+.searchButton {
+  margin-left: 15px;
+  background-image: url("./Lupa.png");
+  background-size: 90%;
+  background-position: center;
+  height: 45px;
+  width: 45px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s;
+  border: 3px solid rgb(30, 48, 80);
+}
+
+.inputSearch:hover {
+  transform: scale(1.05)
+}
+
+.searchButton:hover {
+  transform: scale(1.1);
+}
+
+.searchButton:active {
+  transform: scale(0.9);
+}
