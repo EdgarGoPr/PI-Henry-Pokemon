@@ -111,17 +111,17 @@ export default function Home() {
         totalPages={totalPages}
       />
       <div className="ContentContainer">
-        {pokemons.length > 0 ? (
+        {pokemons?.length > 0 ? (
           <Cards pokemonData={pokemons} />
         ) : (
-          <p>Loading...</p>
+          <p className="Loading"></p>
         )}
       </div>
-      <PaginationButtons
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+          <PaginationButtons
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
     </div>
   );
 }

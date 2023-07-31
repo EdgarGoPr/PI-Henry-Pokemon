@@ -21,7 +21,8 @@ function formatPokemonData(pokemon) {
   const formattedPokemon = {
     id,
     name,
-    image: sprites?.front_default || image || "default_image_url", 
+    // image: sprites?.front_default || image || "default_image_url", 
+    image: sprites?.['versions']['generation-v']['black-white']['animated']['front_default'] || sprites?.front_default,
     health: stats?.[0]?.base_stat || life || 0, 
     attack: stats?.[1]?.base_stat || attack || 0, 
     defense: stats?.[2]?.base_stat || defense || 0, 
@@ -29,6 +30,7 @@ function formatPokemonData(pokemon) {
     height,
     weight,
     type: types?.map((type) => type?.type?.name || null) || [], 
+    source: 'API'
   };
 
   return formattedPokemon;
@@ -66,6 +68,7 @@ function formatPokemonDataDb(pokemon) {
     height,
     weight,
     type: Types.map((t) => t.name) || [], 
+    source: 'DB'
   };
 
   return formattedPokemon;
@@ -81,7 +84,7 @@ function formatCard(pokemon) {
   const formattedCard = {
     id,
     // image: sprites?.front_default || image || "default_image_url",
-    image: sprites?.['versions']['generation-v']['black-white']['animated']['front_default'] || sprites.front_default,
+    image: sprites?.['versions']['generation-v']['black-white']['animated']['front_default'] || sprites?.front_default,
     name,
     attack: stats?.[1]?.base_stat || attack || 0,
     type: types?.map((type) => type.type.name) || [],

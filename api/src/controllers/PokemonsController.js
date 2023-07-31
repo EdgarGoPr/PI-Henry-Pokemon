@@ -3,11 +3,12 @@ const { formatPokemonData, formatCard, formatCardDb, formatPokemonDataDb } = req
 const { Pokemon, Type } = require("../db");
 
 const getAllPokemons = async () => {
-  const apiResponse = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=151");
-  const apiPokemons = apiResponse.data.results.map(async (pokemon) => {
-    const response = await axios.get(pokemon.url);
-    return formatCard(response.data, "API");
-  });
+  const apiResponse = (await axios.get("https://pokeapi.co/api/v2/pokemon?limit=151")).data.results;
+  const apiPokemons = await Promise.all(
+    apiResponse.map(async (pokemon) => {
+      const response = await axios.get(pokemon.url);
+      return formatCard(response.data, "API");
+  }));
 
   const dbPokemons = await Pokemon.findAll({
     include: [
@@ -32,6 +33,19 @@ const paginatePokemons = (pokemons, page, pageSize) => {
   const endIndex = page * pageSize;
   return pokemons.slice(startIndex, endIndex);
 };
+
+const deletePokemon = async (id) => {
+  if (id.length <= 4) {
+    throw new Error('Cannot delete Pokemon from API')
+  } else {
+    const dbPokemon = await Pokemon.findByPk(id)
+    if (!dbPokemon) {
+      throw new Error(`Pokemon with ID ${id} not found in the database.`);
+    }
+    await dbPokemon.destroy()
+    return { message: 'Pokemon deleted successfully' };
+  }
+}
 
 const sortPokemonsByName = async (sort = 'asc', pokemons) => {
   const allPokemons = await pokemons;
@@ -92,7 +106,7 @@ const getPokemonBySource = async (source = 'DB', pokemons) => {
 const getPokemonName = async (name) => {
   try {
     const apiResponse = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?limit=151`
+      `https://pokeapi.co/api/v2/pokemon?limit=251`
     );
     const pokemonList = apiResponse.data.results;
     const filteredPokemon = pokemonList.find(
@@ -124,32 +138,20 @@ const getPokemonName = async (name) => {
 
 const getPokemonDetail = async (id) => {
   if (id.length <= 4) {
-    try {
-      const pokemonDetalle = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${id}`
-      );
-      const pokemonDetail = pokemonDetalle.data;
-      return formatPokemonData(pokemonDetail);
-    } catch (error) {
-      throw new Error(
-        `Error fetching Pokemon details from API: ${error.message}`
-      );
-    }
+    const pokemonDetalle = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${id}`
+    );
+    const pokemonDetail = pokemonDetalle.data;
+    return formatPokemonData(pokemonDetail);
   } else {
-    try {
-      const dbPokemon = await Pokemon.findByPk(id, {
-        include: Type,
-      });
-      if (!dbPokemon) {
-        throw new Error(`Pokemon with ID ${id} not found in the database.`);
-      }
-      const formattedPokemon = formatPokemonDataDb(dbPokemon);
-      return formattedPokemon;
-    } catch (error) {
-      throw new Error(
-        `Error fetching Pokemon details from database: ${error.message}`
-      );
+    const dbPokemon = await Pokemon.findByPk(id, {
+      include: Type,
+    });
+    if (!dbPokemon) {
+      throw new Error(`Pokemon with ID ${id} not found in the database.`);
     }
+    const formattedPokemon = formatPokemonDataDb(dbPokemon);
+    return formattedPokemon;
   }
 };
 
@@ -217,4 +219,5 @@ module.exports = {
   paginatePokemons,
   sortPokemonsByAttack,
   getPokemonBySource,
+  deletePokemon,
 };

@@ -23,3 +23,9 @@
 .pagination-buttons button:hover {
   background-color: #0056b3;
 }
+
+.Loading {
+  background-image: url('https://media.tenor.com/_B4QaT_C3WsAAAAC/bulbasaur-pokemon.gif');
+  height: 410px;
+  width: 490px;
+}

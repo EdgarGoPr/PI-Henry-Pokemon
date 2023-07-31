@@ -4,10 +4,9 @@ import {
   FETCH,
   TYPES,
   CREATE,
-  FILTERED,
-  ORDER,
   SET_PAGE,
   SET_PAGE_SIZE,
+  DELETE,
 } from "./ActionType";
 
 export function create(form) {
@@ -20,6 +19,21 @@ export function create(form) {
   };
 }
 
+export function deletePokemon(id) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`http://localhost:3001/pokemons/${id}`);
+      dispatch({
+        type: DELETE,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+
 export function getTypes() {
   return async (dispatch) => {
     const response = await axios.get('http://localhost:3001/types/');
@@ -30,20 +44,6 @@ export function getTypes() {
     });
   };
 }
-
-export function orderCards(order) {
-  return async (dispatch) => {
-    if(order === "reset"){
-      order = ""
-    }
-    const response = await axios.get(`http://localhost:3001/pokemons/?sort=${order}`);
-    const orderedPokemons = response.data;
-    dispatch({
-      type: ORDER,
-      payload: orderedPokemons,
-    });
-  };
-};
 
 export const setPage = (page) => ({
   type: SET_PAGE,
@@ -100,17 +100,6 @@ export function fetchPokemons(page, pageSize, sort, tipo, source) {
     });
   };
 }
-
-// export const fetchFilteredPokemons = (filter) => {
-//   return async (dispatch) => {
-//     const response = await axios.get(`http://localhost:3001/pokemons/?type=${filter}`);
-//     const filteredPokemons = response.data;
-//     dispatch({
-//       type: FILTERED,
-//       payload: filteredPokemons,
-//     });
-//   };
-// };
 
 export function reset() {
   return {

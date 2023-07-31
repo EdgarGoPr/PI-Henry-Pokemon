@@ -62,11 +62,11 @@
 }
 
 .DetailCard img {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 32px;
+  border-radius: 20%;
+  /* margin-bottom: 16px; */
 }
 
 .DetailCard h2 {
@@ -93,7 +93,7 @@
 }
 
 .DetailCard .type {
-  font-size: 18px;
+  font-size: 20px;
   margin-top: auto;
   color: black;
 }

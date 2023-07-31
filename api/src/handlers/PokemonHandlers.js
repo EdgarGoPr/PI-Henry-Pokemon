@@ -8,22 +8,8 @@ const {
   paginatePokemons,
   sortPokemonsByAttack,
   getPokemonBySource,
+  deletePokemon,
 } = require("../controllers/PokemonsController");
-
-// const getPokemons = async (req, res) => {
-//   try {
-//     const { name } = req.query;
-//     if (name) {
-//       const pokemons = await getPokemonName(name);
-//       return res.json(pokemons);
-//     } else {
-//       const pokemons = await getAllPokemons();
-//       return res.json(pokemons);
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
 const getPokemons = async (req, res) => {
   try {
@@ -33,7 +19,7 @@ const getPokemons = async (req, res) => {
       return res.json(pokemons);
     }
     let pokemons = await getAllPokemons();
-    if(source){
+    if (source) {
       if (source === 'DB' || source === 'API') {
         pokemons = await getPokemonBySource(source, pokemons)
       }
@@ -56,30 +42,32 @@ const getPokemons = async (req, res) => {
       pokemons = await getPokemonByType(type, pokemons);
     }
     const totalPokemons = pokemons.length
-
     const paginatedPokemons = paginatePokemons(pokemons, page, pageSize);
-
     return res.json({ totalPokemons, data: paginatedPokemons });
-
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
 const pokemonDetail = async (req, res) => {
   const { id } = req.params;
-  // console.log(id, "idPokemon");
-  const pokemonDetail = await getPokemonDetail(id);
   try {
-    // if (!pokemonDetail) {
-    //   throw new Error("Detail not found");
-    // }
+    const pokemonDetail = await getPokemonDetail(id);
     res.send(pokemonDetail);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+const pokemonDestroy = async (req, res) => {
+  const { id } = req.params
+  try {
+    const result = await deletePokemon(id)
+    return res.json(result)
+  } catch (error) {
+    return res.status(400).json({ error: error.message })
+  }
+}
 
 const pokemonCreado = async (req, res) => {
   const nuevito = req.body;
@@ -91,43 +79,9 @@ const pokemonCreado = async (req, res) => {
   }
 };
 
-
-
-// const getByType = async (req, res) => {
-//   const { type } = req.query;
-
-//   if (!type) {
-//     return res.status(400).json({ error: "Type parameter is required" });
-//   }
-
-//   try {
-//     const byType = await getPokemonByType(type);
-//     return res.json(byType);
-//   } catch (error) {
-//     console.error("Error retrieving Pokemon by type:", error);
-//     return res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-
-// const handleSortPokemons = async (req, res) => {
-//   const { sort } = req.query;
-//   try {
-//     if (sort !== 'asc' && sort !== 'desc') {
-//       throw new Error('Invalid sort order');
-//     }
-
-//     const sorted = await sortPokemonsByName(sort);
-//     res.json(sorted);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-
 module.exports = {
   getPokemons,
   pokemonDetail,
   pokemonCreado,
-  // getByType,
-  // handleSortPokemons
+  pokemonDestroy,
 };

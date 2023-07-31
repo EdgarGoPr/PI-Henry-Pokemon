@@ -1,28 +1,37 @@
-// Detail.jsx
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import "./Detail.css";
-import { Link } from "react-router-dom";
+import { deletePokemon } from "../../Redux/Actions";
 
 export default function Detail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [pokemonDetail, setPokemonDetail] = useState();
 
   useEffect(() => {
     const getPokemonDetail = async (id) => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/pokemons/detail/${id}`
-        );
-        setPokemonDetail(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+      const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
+      console.log("response", response.data);
+      setPokemonDetail(response.data);
     };
 
     getPokemonDetail(id);
   }, [id]);
+
+  console.log("pokemonDetail", pokemonDetail);
+
+  useEffect(() => {
+    if (pokemonDetail && pokemonDetail?.source === "DB") {
+      dispatch(deletePokemon(id));
+    }
+  }, [dispatch, id, pokemonDetail]);
+
+  const handleDelete = () => {
+    navigate("/pokemons");
+  };
 
   return (
     <div className="Detail">
@@ -50,7 +59,7 @@ export default function Detail() {
               </div>
             </div>
             <h3 className="type">
-              TYPE:  {pokemonDetail.type[0]}{" "}
+              TYPE: {pokemonDetail.type[0]}{" "}
               {pokemonDetail.type[1] && `, ${pokemonDetail.type[1]}`}
             </h3>
           </div>
@@ -58,6 +67,11 @@ export default function Detail() {
       ) : (
         <img src="./detective_dancing.gif" alt="Loading..." />
       )}
+      <div>
+        {pokemonDetail?.source === "DB" && (
+          <button onClick={handleDelete}>Delete</button>
+        )}
+      </div>
     </div>
   );
 }

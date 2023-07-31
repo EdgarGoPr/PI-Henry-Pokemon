@@ -22,7 +22,9 @@ const TypeButton = ({ type, formType, handleTypeClick }) => {
 
 const useNameExists = (name) => {
   const pokemons = useSelector((state) => state.pokemons);
-  return pokemons.some((pokemon) => pokemon.name.toLowerCase() === name.toLowerCase());
+  return pokemons.some(
+    (pokemon) => pokemon.name.toLowerCase() === name.toLowerCase()
+  );
 };
 
 export default function Form() {
@@ -47,7 +49,7 @@ export default function Form() {
     type: [],
   });
 
-  const nameExists = useNameExists(form.name)
+  const nameExists = useNameExists(form.name);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -71,9 +73,9 @@ export default function Form() {
       if (nameExists) {
         setError((prevError) => ({
           ...prevError,
-          name: 'Pokemon name already exists!',
+          name: "Pokemon name already exists!",
         }));
-        alert('Pokemon name already exists!')
+        alert("Pokemon name already exists!");
       } else {
         const newPokemon = {
           name: form.name.toLowerCase(),
@@ -95,8 +97,6 @@ export default function Form() {
       alert("Could not create pokemon, missing data");
     }
   };
-  
-  
 
   const handleTypeClick = (type) => {
     if (form.type.includes(type)) {
@@ -137,75 +137,91 @@ export default function Form() {
       <form onSubmit={submitHandler}>
         <div className="inputs-container">
           <div className="inputs">
-            <input
-              type="text"
-              name="name"
-              placeholder="NAME"
-              value={form.name}
-              onChange={changeHandler}
-            />
-            <div>{error.name && <p>{error.name}</p>}</div>
-            <input
-              type="text"
-              name="image"
-              placeholder="IMAGE URL"
-              value={form.image}
-              onChange={changeHandler}
-            />
-            <div>{error.img && <p>{error.img}</p>}</div>
-            <input
-              type="number"
-              name="life"
-              placeholder="HEALTH"
-              value={form.health}
-              onChange={changeHandler}
-            />
-            <div>{error.life && <p>{error.life}</p>}</div>
-            <input
-              type="number"
-              name="attack"
-              placeholder="ATTACK"
-              value={form.attack}
-              onChange={changeHandler}
-            />
-            <div>{error.attack && <p>{error.attack}</p>}</div>
-            <input
-              type="number"
-              name="defense"
-              placeholder="DEFENSE"
-              value={form.defense}
-              onChange={changeHandler}
-            />
-            <div>{error.defense && <p>{error.defense}</p>}</div>
-            <input
-              type="number"
-              name="speed"
-              placeholder="SPEED"
-              value={form.speed}
-              onChange={changeHandler}
-            />
-            <div>{error.speed && <p>{error.speed}</p>}</div>
-            <input
-              type="number"
-              name="height"
-              placeholder="HEIGHT"
-              value={form.height}
-              onChange={changeHandler}
-            />
-            <div>{error.height && <p>{error.height}</p>}</div>
-            <input
-              type="number"
-              name="weight"
-              placeholder="WEIGHT"
-              value={form.weight}
-              onChange={changeHandler}
-            />
-            <div>{error.weight && <p>{error.weight}</p>}</div>
+            <div className="input-container">
+              <input
+                type="text"
+                name="name"
+                placeholder="NAME"
+                value={form.name}
+                onChange={changeHandler}
+              />
+              {error.name && <p className="error-message">{error.name}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="text"
+                name="image"
+                placeholder="IMAGE URL"
+                value={form.image}
+                onChange={changeHandler}
+              />
+              {error.image && <p className="error-message">{error.image}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="number"
+                name="life"
+                placeholder="HEALTH"
+                value={form.life}
+                onChange={changeHandler}
+              />
+              {error.life && <p className="error-message">{error.life}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="number"
+                name="attack"
+                placeholder="ATTACK"
+                value={form.attack}
+                onChange={changeHandler}
+              />
+              {error.attack && <p className="error-message">{error.attack}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="number"
+                name="defense"
+                placeholder="DEFENSE"
+                value={form.defense}
+                onChange={changeHandler}
+              />
+              {error.defense && <p className="error-message">{error.defense}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="number"
+                name="speed"
+                placeholder="SPEED"
+                value={form.speed}
+                onChange={changeHandler}
+              />
+              {error.speed && <p className="error-message">{error.speed}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="number"
+                name="height"
+                placeholder="HEIGHT"
+                value={form.height}
+                onChange={changeHandler}
+              />
+              {error.height && <p className="error-message">{error.height}</p>}
+            </div>
+            <div className="input-container">
+              <input
+                type="number"
+                name="weight"
+                placeholder="WEIGHT"
+                value={form.weight}
+                onChange={changeHandler}
+              />
+              {error.weight && <p className="error-message">{error.weight}</p>}
+            </div>
           </div>
         </div>
         <div className="buttons-container">
           <div className="types-container">
-            <h1>TYPE</h1>
+            <h1 className="Type">TYPE</h1>
             <div className="buttons">
               {types &&
                 types.map((type) => (
@@ -217,9 +233,10 @@ export default function Form() {
                   />
                 ))}
             </div>
-            <div> {error.type && <p>{error.type}</p>} </div>
+            <div> {error.type && <p className="error-message-types">{error.type}</p>} </div>
           </div>
         </div>
+        <div></div>
         <button type="submit" className="create-button">
           Create Pokemons
         </button>
