@@ -8,10 +8,10 @@ import { Provider } from "react-redux";
 import store from './Redux/Store';
 
 ReactDOM.render(
-  <Provider store = {store}>
+  <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
-        <App/>
+        <App />
       </React.StrictMode>
     </BrowserRouter>
   </Provider>,

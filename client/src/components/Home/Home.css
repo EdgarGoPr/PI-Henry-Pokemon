@@ -1,28 +1,25 @@
 .Content {
-  margin-top: 60px; 
+  margin-top: 60px;
 }
 
 .ContentContainer {
-  margin-top: 60px;
-}
-.pagination-buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .pagination-buttons button {
   margin: 0 5px;
-  padding: 5px 10px;
+  padding: 5px 20px;
   border: none;
-  background-color: #f0f0f0;
+  background-color: #007bff;
+  border-radius: 20%;
+  color: white;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .pagination-buttons button.active {
-  background-color: #ccc;
+  background-color: #0056b3;
 }
-
-
-
-
+.pagination-buttons button:hover {
+  background-color: #0056b3;
+}

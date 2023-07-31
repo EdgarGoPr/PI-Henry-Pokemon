@@ -6,8 +6,44 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
     (_, index) => index + 1
   );
 
+  const handleFirstPage = () => {
+    onPageChange(1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
+    }
+  };
+
+  const handleLastPage = () => {
+    onPageChange(totalPages);
+  };
+
   return (
     <div className="pagination-buttons">
+      <button
+        key={"<<<"}
+        className={"<<<" === currentPage ? "active" : ""}
+        onClick={handleFirstPage}
+        disabled={currentPage === 1}
+      >
+        {"<<<"}
+      </button>
+      <button
+        key={"<"}
+        className={"<" === currentPage ? "active" : ""}
+        onClick={handlePreviousPage}
+        disabled={currentPage === 1}
+      >
+        {"<"}
+      </button>
       {pageNumbers.map((pageNumber) => (
         <button
           key={pageNumber}
@@ -17,6 +53,20 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
           {pageNumber}
         </button>
       ))}
+      <button
+        key={">"}
+        className={">" === currentPage ? "active" : ""}
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
+      >{">"}</button>
+      <button
+        key={">>>"}
+        className={">>>" === currentPage ? "active" : ""}
+        onClick={handleLastPage}
+        disabled={currentPage === totalPages}
+      >
+        {">>>"}
+      </button>
     </div>
   );
 };

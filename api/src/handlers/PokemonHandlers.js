@@ -56,7 +56,6 @@ const getPokemons = async (req, res) => {
       pokemons = await getPokemonByType(type, pokemons);
     }
     const totalPokemons = pokemons.length
-    console.log(totalPokemons)
 
     const paginatedPokemons = paginatePokemons(pokemons, page, pageSize);
 

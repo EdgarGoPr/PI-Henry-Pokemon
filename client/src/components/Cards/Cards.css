@@ -1,5 +1,32 @@
-.Cartitas {
+/* .Cartitas {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+} */
+
+.Cartitas {
+  display: grid;
+  grid-template-columns: repeat(
+    6,
+    minmax(250px, 1fr)
+  ); /* Ajusta el ancho mínimo y máximo de las tarjetas */
+  grid-gap: 20px; /* Podes ajustar este valor según tu preferencia */
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+  max-width: 1700px; /* Ajusta el ancho máximo del contenedor para evitar scroll */
+  height: 730px;
+  margin: 0 auto; /* Centra el contenedor en la pantalla */
 }
+.pagination-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* .Card {
+  width: calc(100% / 6);
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+} */

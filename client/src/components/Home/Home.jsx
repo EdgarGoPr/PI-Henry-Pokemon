@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../Cards/Cards";
-import {
-  fetchPokemons,
-  orderCards,
-  reset,
-  fetchFilteredPokemons,
-  getTypes,
-  // setPage,
-  // setPageSize,
-  // fetchEditedPokemons
-} from "../../Redux/Actions";
+import { fetchPokemons, reset, getTypes } from "../../Redux/Actions";
 import Nav from "../Nav/Nav";
 import PaginationButtons from "../../Utils/Paginate";
 import "./Home.css";
@@ -20,33 +11,26 @@ export default function Home() {
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
   const pageSize = useSelector((state) => state.pageSize);
-  const tipo = useSelector((state) => state.tipo);
-  const sort = useSelector((state) => state.sort)
   const totalPokemonsCount = useSelector((state) => state.totalPokemonsCount);
   const [sortOrder, setSortOrder] = useState(null);
   const [sortFilter, setSortFilter] = useState(null);
-  const [filterSource, setFilterSource] = useState(null)
+  const [filterSource, setFilterSource] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchPokemons(currentPage, pageSize, sortOrder, sortFilter, filterSource));
+    dispatch(
+      fetchPokemons(currentPage, pageSize, sortOrder, sortFilter, filterSource)
+    );
   }, [dispatch, currentPage, pageSize, sortOrder, sortFilter, filterSource]);
 
   useEffect(() => {
     setTotalPages(Math.ceil(parseInt(totalPokemonsCount, 10) / pageSize));
-    // console.log(totalPokemonsCount)
   }, [totalPokemonsCount, pageSize]);
-
-  // console.log('PK After useEffect', pokemons)
 
   useEffect(() => {
     dispatch(getTypes());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getTypes());
-  // }, [dispatch]);
 
   const handleFilter = (event) => {
     const finalFilter = event.value;
@@ -54,9 +38,11 @@ export default function Home() {
       dispatch(reset());
       setSortFilter("reset");
     } else {
-      const pageOne = 1
-      dispatch(fetchPokemons(pageOne, pageSize, sortOrder, finalFilter, filterSource));
-      setCurrentPage(pageOne)
+      const pageOne = 1;
+      dispatch(
+        fetchPokemons(pageOne, pageSize, sortOrder, finalFilter, filterSource)
+      );
+      setCurrentPage(pageOne);
       setSortFilter(finalFilter);
     }
   };
@@ -67,9 +53,11 @@ export default function Home() {
       dispatch(reset());
       setFilterSource("reset");
     } else {
-      const pageOne = 1
-      dispatch(fetchPokemons(pageOne, pageSize, sortOrder, sortFilter, finalFilter));
-      setCurrentPage(pageOne)
+      const pageOne = 1;
+      dispatch(
+        fetchPokemons(pageOne, pageSize, sortOrder, sortFilter, finalFilter)
+      );
+      setCurrentPage(pageOne);
       setFilterSource(finalFilter);
     }
   };
@@ -80,7 +68,9 @@ export default function Home() {
       dispatch(reset());
       setSortOrder("reset");
     }
-    dispatch(fetchPokemons(currentPage, pageSize, finalOrder, sortFilter, filterSource));
+    dispatch(
+      fetchPokemons(currentPage, pageSize, finalOrder, sortFilter, filterSource)
+    );
     setSortOrder(finalOrder);
   };
 
@@ -97,17 +87,15 @@ export default function Home() {
     { value: "reset", label: "Select Order" },
     { value: "asc", label: "Ascending" },
     { value: "desc", label: "Descending" },
-    { value: "max", label: "Max Attack"},
-    { value: "min", label: "Min Attack"},
+    { value: "max", label: "Max Attack" },
+    { value: "min", label: "Min Attack" },
   ];
 
   const sourceOptions = [
-    { value: "reset", label: "Select Source"},
-    { value: "DB", label: "Data Base"},
-    { value: "API", label: "Api"},
-  ]
-
-  // console.log('pokemons', pokemons)
+    { value: "reset", label: "Select Source" },
+    { value: "DB", label: "Data Base" },
+    { value: "API", label: "Api" },
+  ];
 
   return (
     <div>
@@ -120,6 +108,7 @@ export default function Home() {
         handleFilter={handleFilter}
         sourceOptions={sourceOptions}
         handleFilterSource={handleFilterSource}
+        totalPages={totalPages}
       />
       <div className="ContentContainer">
         {pokemons.length > 0 ? (
@@ -127,12 +116,12 @@ export default function Home() {
         ) : (
           <p>Loading...</p>
         )}
-        <PaginationButtons
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
       </div>
+      <PaginationButtons
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

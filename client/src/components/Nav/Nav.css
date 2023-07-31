@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  z-index: 999; /* Set a high z-index value to ensure it appears in front of other elements */
+  z-index: 999; 
 }
 
 .Nav a {
@@ -26,9 +26,9 @@
   padding: 8px;
 }
 
-.Nav .HomeButton {
-  margin-left: 50px;
-}
+/* .Nav .HomeButton {
+  margin-left: 30px;
+} */
 
 .CreateButton {
   background-color: blue;
@@ -37,5 +37,5 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  margin-right: 70px;
+  margin-right: 50px;
 }

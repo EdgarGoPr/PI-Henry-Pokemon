@@ -101,16 +101,16 @@ export function fetchPokemons(page, pageSize, sort, tipo, source) {
   };
 }
 
-export const fetchFilteredPokemons = (filter) => {
-  return async (dispatch) => {
-    const response = await axios.get(`http://localhost:3001/pokemons/?type=${filter}`);
-    const filteredPokemons = response.data;
-    dispatch({
-      type: FILTERED,
-      payload: filteredPokemons,
-    });
-  };
-};
+// export const fetchFilteredPokemons = (filter) => {
+//   return async (dispatch) => {
+//     const response = await axios.get(`http://localhost:3001/pokemons/?type=${filter}`);
+//     const filteredPokemons = response.data;
+//     dispatch({
+//       type: FILTERED,
+//       payload: filteredPokemons,
+//     });
+//   };
+// };
 
 export function reset() {
   return {
