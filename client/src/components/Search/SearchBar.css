@@ -1,45 +1,45 @@
 .search {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inputSearch {
-  margin-right: 5px;
-  font-family: "Caveat", cursive;
-  font-size: 20px;
-  flex-grow: 2;
-  height: 45px;
-  padding: 5px;
-  border: 3px solid rgb(30, 48, 80);
-  border-radius: 10px;
-  transition: transform 0.2s;
-}
-
-/* .inputSearch:hover {
-  transform: scale(1.05); 
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
-} */
-
-.searchButton {
-  margin-left: 15px;
-  background-image: url("./Lupa.png");
-  background-size: 90%;
-  background-position: center;
-  height: 45px;
-  width: 45px;
-  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.2s;
-  border: 3px solid rgb(30, 48, 80);
+  margin-top: 20px;
+  font-family: "Caveat", cursive;
+  font-size: 16px;
+  flex-grow: -1;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: #007bff7c;
+}
+
+.searchButton {
+  margin-bottom: 1px;
+  margin-left: 15px;
+  background-image: url("./Lupa1.png");
+  background-size: 100%;
+  background-position: center;
+  height: 35px;
+  width: 35px;
+  border-radius: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #007bff75;
 }
 
 .inputSearch:hover {
-  transform: scale(1.05)
+  background-color: #266fa0a6;
 }
 
 .searchButton:hover {
-  transform: scale(1.1);
+  background-color: #266fa0a6;
 }
 
 .searchButton:active {

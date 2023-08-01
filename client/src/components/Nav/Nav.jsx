@@ -10,7 +10,7 @@ const Nav = ({ sourceOptions, handleFilterSource, sortOptions, sortOrder, handle
   return (
     <div className="Nav">
       <Link to="/" className="HomeButton">
-        <button className="Inicio">Inicio</button>
+        <button className="Inicio">Landing</button>
       </Link>
       <div className="FilterBar">
         <Select
@@ -43,8 +43,8 @@ const Nav = ({ sourceOptions, handleFilterSource, sortOptions, sortOrder, handle
         />
       </div>
       <SearchBar />
-      <Link to="/pokemons/create" className="CreateButton">
-        <button>Crear Pokemon</button>
+      <Link to="/pokemons/create">
+        <button className="CreateButton">Create Pokemon</button>
       </Link>
     </div>
   );

@@ -3,7 +3,7 @@
 }
 
 .ContentContainer {
-  margin-top: 10px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,12 +21,31 @@
   transition: background-color 0.3s ease;
 }
 
+.firstButton[disabled],
+.NextButton[disabled] {
+  background-color: white;
+  cursor: not-allowed;
+  color: #fff3f3;
+}
+
 .pagination-buttons button.active {
   background-color: #0056b3;
 }
+
+.pagination-buttons button.disabled {
+  /* background-color: #51a4fdbe; */
+  cursor:  not-allowed;
+}
+
 .pagination-buttons button:hover {
   background-color: #0056b3;
 }
+
+.pagination-buttons button.disabled:hover {
+  background-color: #51a4fdbe;
+  cursor:  not-allowed;
+}
+
 
 .Loading {
   /* height: 410px; */

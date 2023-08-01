@@ -1,32 +1,42 @@
-/* .Cartitas {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-} */
-
 .Cartitas {
   display: grid;
-  grid-template-columns: repeat(
-    6,
-    minmax(250px, 1fr)
-  ); /* Ajusta el ancho mínimo y máximo de las tarjetas */
-  grid-gap: 20px; /* Podes ajustar este valor según tu preferencia */
-  justify-content: center; /* Centra las tarjetas horizontalmente */
-  max-width: 1700px; /* Ajusta el ancho máximo del contenedor para evitar scroll */
+  grid-template-columns: repeat(6, minmax(250px, 1fr));
+  grid-gap: 20px;
+  justify-content: center;
+  max-width: 1700px;
   height: 730px;
-  margin: 0 auto; /* Centra el contenedor en la pantalla */
+  margin: 0 auto;
 }
+
 .pagination-buttons {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-/* .Card {
-  width: calc(100% / 6);
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-} */
+@media (max-width: 1200px) {
+  .Cartitas {
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    height: auto;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .Cartitas {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .Cartitas {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 400px) {
+  .Cartitas {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+}
+

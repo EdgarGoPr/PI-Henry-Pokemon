@@ -32,7 +32,7 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
         key={"<<<"}
         className={"<<<" === currentPage ? "active" : ""}
         onClick={handleFirstPage}
-        disabled={currentPage === 1}
+        disabled={currentPage === 0}
       >
         {"<<<"}
       </button>
@@ -57,13 +57,13 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
         key={">"}
         className={">" === currentPage ? "active" : ""}
         onClick={handleNextPage}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages - 1}
       >{">"}</button>
       <button
         key={">>>"}
         className={">>>" === currentPage ? "active" : ""}
         onClick={handleLastPage}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages - 1}
       >
         {">>>"}
       </button>
