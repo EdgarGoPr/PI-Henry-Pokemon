@@ -4,6 +4,10 @@
 
 .ContentContainer {
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 700px;
 }
 
 .pagination-buttons button {
@@ -25,7 +29,11 @@
 }
 
 .Loading {
-  background-image: url('https://media.tenor.com/_B4QaT_C3WsAAAAC/bulbasaur-pokemon.gif');
-  height: 410px;
-  width: 490px;
+  /* height: 410px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 10px solid black;
+  border-radius: 10%;
+
 }

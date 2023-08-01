@@ -131,7 +131,7 @@ export default function Form() {
     <div className="form-container">
       <div className="top-left">
         <Link to="/pokemons">
-          <button>Home</button>
+          <button className="homeButton">Home</button>
         </Link>
       </div>
       <form onSubmit={submitHandler}>
@@ -155,7 +155,7 @@ export default function Form() {
                 value={form.image}
                 onChange={changeHandler}
               />
-              {error.image && <p className="error-message">{error.image}</p>}
+              {error.img && <p className="error-message">{error.img}</p>}
             </div>
             <div className="input-container">
               <input
@@ -185,7 +185,9 @@ export default function Form() {
                 value={form.defense}
                 onChange={changeHandler}
               />
-              {error.defense && <p className="error-message">{error.defense}</p>}
+              {error.defense && (
+                <p className="error-message">{error.defense}</p>
+              )}
             </div>
             <div className="input-container">
               <input
@@ -219,27 +221,34 @@ export default function Form() {
             </div>
           </div>
         </div>
-        <div className="buttons-container">
-          <div className="types-container">
-            <h1 className="Type">TYPE</h1>
-            <div className="buttons">
-              {types &&
-                types.map((type) => (
-                  <TypeButton
-                    key={uuidv4()}
-                    type={type}
-                    formType={form.type}
-                    handleTypeClick={handleTypeClick}
-                  />
-                ))}
+        <div>
+          <div className="buttons-container">
+            <div className="types-container">
+              <h1 className="Type">TYPE</h1>
+              <div className="buttons">
+                {types &&
+                  types.map((type) => (
+                    <TypeButton
+                      className={`Card-type-${type}`}
+                      key={uuidv4()}
+                      type={type}
+                      formType={form.type}
+                      handleTypeClick={handleTypeClick}
+                    />
+                  ))}
+              </div>
+              <div>
+                {" "}
+                {error.type && (
+                  <p className="error-message-types">{error.type}</p>
+                )}{" "}
+              </div>
             </div>
-            <div> {error.type && <p className="error-message-types">{error.type}</p>} </div>
           </div>
+          <button type="submit" className="create-button">
+            Create Pokemons
+          </button>
         </div>
-        <div></div>
-        <button type="submit" className="create-button">
-          Create Pokemons
-        </button>
       </form>
     </div>
   );

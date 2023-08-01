@@ -114,7 +114,7 @@ export default function Home() {
         {pokemons?.length > 0 ? (
           <Cards pokemonData={pokemons} />
         ) : (
-          <p className="Loading"></p>
+          <img src = 'https://media.tenor.com/_B4QaT_C3WsAAAAC/bulbasaur-pokemon.gif' alt= 'Pokemon_image' className="Loading"></img>
         )}
       </div>
           <PaginationButtons

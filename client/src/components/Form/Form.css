@@ -1,3 +1,17 @@
+.homeButton {
+  margin-top: 20px;
+  margin-left: 20px;
+  background: #007bff31;
+  background-image: -webkit-linear-gradient(top, #007bff83, #297fb98e);
+  -webkit-border-radius: 28;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
 .form-container {
   /* display: flex; */
   align-items: flex-start;
@@ -37,12 +51,15 @@ form {
   width: 700px;
   height: 40px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   padding: 10px;
+  background-color: #378d3bb7;
+  color: wheat;
 }
 
 .inputs input::placeholder {
   font-size: 16px;
+  color: wheat;
 }
 
 .Type {
@@ -50,15 +67,17 @@ form {
 }
 
 .buttons-container {
-  /* margin-top: 170px; */
+  margin-top: 120px;
   margin-left: auto;
   margin-right: 400px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
-  padding: 10px;
-  align-self: flex-end;
+  padding: 15px;
+  align-self: center;
+  background-color: #bb5918c2;
+  border-radius: 10%;
 }
 
 .buttons {
@@ -80,12 +99,11 @@ form {
 .create-button {
   width: 300px;
   margin-top: 10px;
-  margin-right: 250px;
+  margin-left: 130px;
   align-self: flex-end;
-  background: #007bff;
-  background-image: -webkit-linear-gradient(top, #007bff, #2980b9);
+  background: #007bff31;
+  background-image: -webkit-linear-gradient(top, #007bff83, #297fb98e);
   -webkit-border-radius: 28;
-  -moz-border-radius: 28;
   border-radius: 28px;
   font-family: Georgia;
   color: #ffffff;
@@ -96,8 +114,8 @@ form {
 }
 
 .create-button:hover {
-  background: #0056b3;;
-  background-image: -webkit-linear-gradient(top, #0056b3, #3498db);
+  background: #0057b3af;;
+  background-image: -webkit-linear-gradient(top, #0057b3b7, #3498dbb7);
   text-decoration: none;
 }
 
@@ -108,17 +126,25 @@ form {
 .selectButton {
   height: 30px;
   width: 30px;
-  background-color: #ccc;
-  color: #fff;
+  background-color: #ccccccb2;
+  color: #ffffffa6;
   transition: background-color 0.3s ease;
 }
 
 .selectButton:hover {
-  background-color: #999;
+  background-color: #808080b4;
 }
 
 .selectButton.active {
-  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  background-image: url('./bokeball.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .input-container {
@@ -128,7 +154,7 @@ form {
 
 .error-message {
   position: absolute;
-  bottom: -30px;
+  bottom: -10px;
   right: 0;
   background-color: #ffcccc;
   padding: 5px;
@@ -140,7 +166,6 @@ form {
 
 .error-message-type {
   position: absolute;
-  bottom: -30px;
   right: 0;
   background-color: #ffcccc;
   padding: 5px;
@@ -157,4 +182,88 @@ input {
   border-radius: 10px;
   margin-bottom: 20px;
   padding: 10px;
+}
+
+.Card-button:hover {
+  background-color: #0056b3;
+}
+
+.Card-type-normal {
+  color: #A8A090;
+}
+
+.Card-type-fighting {
+  color: #A05038;
+}
+
+.Card-type-flying {
+  color: #98A8F0;
+}
+
+.Card-type-poison {
+  color: #B058A0;
+}
+
+.Card-type-ground {
+  color: #E9D6A4;
+}
+
+.Card-type-rock {
+  color: #B8A058;
+}
+
+.Card-type-bug {
+  color: #A8B820;
+}
+
+.Card-type-ghost {
+  color: #6060B0;
+}
+
+.Card-type-steel {
+  color: #A8A8C0;
+}
+
+.Card-type-fire {
+  color: #F05030;
+}
+
+.Card-type-water {
+  color: #3899F8;
+}
+
+.Card-type-grass {
+  color: #78C850;
+}
+
+.Card-type-electric {
+  color: #F8D030;
+}
+
+.Card-type-psychic {
+  color: #F870A0;
+}
+
+.Card-type-ice {
+  color: #58C8E0;
+}
+
+.Card-type-dragon {
+  color: #7860E0;
+}
+
+.Card-type-dark {
+  color: #7A5848;
+}
+
+.Card-type-fairy {
+  color: #E79FE7;
+}
+
+.Card-type-unknown {
+  color: white;
+}
+
+.Card-type-shadow {
+  color: black;
 }

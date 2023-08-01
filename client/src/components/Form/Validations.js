@@ -35,8 +35,12 @@ export default function validations(form) {
     error.weight = 'Choose between 1 and 255'
   }
 
-  if(form.image.length === 0) {
-    error.img = 'Enter an image url'
+  // const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/[\w.-]*)*\/?$/i;
+  //   if (!urlRegex.test(form.img)) {
+  //     error.img = "Invalid URL";
+  //   }
+  if (form.image.length < 20) {
+    error.img = 'Enter a valid URL'
   }
 
   if (form.type.length > 2) {

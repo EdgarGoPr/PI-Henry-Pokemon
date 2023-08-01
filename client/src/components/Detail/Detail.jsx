@@ -1,35 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import "./Detail.css";
-import { deletePokemon } from "../../Redux/Actions";
+import { deletePokemon, fetchPokemons, getPokemonDetail } from "../../Redux/Actions";
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [pokemonDetail, setPokemonDetail] = useState();
+  const pokemonDetail= useSelector((state) => state.pokemonDetail);
 
   useEffect(() => {
-    const getPokemonDetail = async (id) => {
-      const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
-      console.log("response", response.data);
-      setPokemonDetail(response.data);
-    };
-
-    getPokemonDetail(id);
-  }, [id]);
-
-  console.log("pokemonDetail", pokemonDetail);
-
-  useEffect(() => {
-    if (pokemonDetail && pokemonDetail?.source === "DB") {
-      dispatch(deletePokemon(id));
-    }
-  }, [dispatch, id, pokemonDetail]);
+    dispatch(getPokemonDetail(id));
+  }, [dispatch, id]);
+  
+  console.log("pokemonDetail", pokemonDetail)
+  ;
 
   const handleDelete = () => {
+    dispatch(deletePokemon(id))
+    dispatch(fetchPokemons())
+    alert('Pokemon deleted successfuly')
     navigate("/pokemons");
   };
 
@@ -69,7 +60,7 @@ export default function Detail() {
       )}
       <div>
         {pokemonDetail?.source === "DB" && (
-          <button onClick={handleDelete}>Delete</button>
+          <button onClick={()=>handleDelete}>Delete</button>
         )}
       </div>
     </div>

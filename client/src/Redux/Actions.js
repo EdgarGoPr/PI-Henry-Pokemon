@@ -7,6 +7,7 @@ import {
   SET_PAGE,
   SET_PAGE_SIZE,
   DELETE,
+  DETAIL,
 } from "./ActionType";
 
 export function create(form) {
@@ -19,17 +20,23 @@ export function create(form) {
   };
 }
 
+export const getPokemonDetail = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
+    dispatch({
+      type: DETAIL,
+      payload: response.data
+    })
+  }
+}
+
 export function deletePokemon(id) {
   return async (dispatch) => {
-    try {
-      const response = await axios.delete(`http://localhost:3001/pokemons/${id}`);
-      dispatch({
-        type: DELETE,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    const response = await axios.delete(`http://localhost:3001/pokemons/${id}`);
+    dispatch({
+      type: DELETE,
+      payload: response.data,
+    });
   };
 }
 
@@ -59,38 +66,38 @@ export function fetchPokemons(page, pageSize, sort, tipo, source) {
   return async (dispatch) => {
     const URL = `http://localhost:3001/pokemons?page=${page}&pageSize=${pageSize}`
     let response = []
-    if(sort === "reset") {
+    if (sort === "reset") {
       sort = ""
     }
-    if(tipo === "reset") {
+    if (tipo === "reset") {
       tipo = ""
     }
-    if(source === "reset") {
+    if (source === "reset") {
       source = ""
     }
 
-    if(!sort && !tipo && !source){
+    if (!sort && !tipo && !source) {
       response = await axios.get(URL); //x-x-x
     }
-    if(sort && !tipo && !source) {
+    if (sort && !tipo && !source) {
       response = await axios.get(`${URL}&sort=${sort}`); // i-x-x
     }
-    if(!sort && tipo && !source){
+    if (!sort && tipo && !source) {
       response = await axios.get(`${URL}&type=${tipo}`); // x-i-x
     }
-    if(!sort && !tipo && source){
+    if (!sort && !tipo && source) {
       response = await axios.get(`${URL}&source=${source}`); // x-x-i
     }
-    if(sort && tipo && !source){
+    if (sort && tipo && !source) {
       response = await axios.get(`${URL}&sort=${sort}&type=${tipo}`); // i-i-x
     }
-    if(sort && !tipo && source){
+    if (sort && !tipo && source) {
       response = await axios.get(`${URL}&sort=${sort}&source=${source}`); // i-x-i
     }
-    if(!sort && tipo && source){
+    if (!sort && tipo && source) {
       response = await axios.get(`${URL}&source=${source}&type=${tipo}`); // x-i-i
     }
-    if(sort && tipo && source){
+    if (sort && tipo && source) {
       response = await axios.get(`${URL}&sort=${sort}&type=${tipo}&source=${source}`); // i-i-i
     }
     dispatch({

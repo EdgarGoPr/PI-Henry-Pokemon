@@ -8,7 +8,7 @@ const getAllPokemons = async () => {
     apiResponse.map(async (pokemon) => {
       const response = await axios.get(pokemon.url);
       return formatCard(response.data, "API");
-  }));
+    }));
 
   const dbPokemons = await Pokemon.findAll({
     include: [
@@ -202,6 +202,68 @@ const createPokemon = async ({
 
     console.log(fetchedPokemon);
     return fetchedPokemon;
+  } else {
+    console.error("Unable to find the specified types.");
+    return null;
+  }
+};
+
+const changePokemon = async ({
+  id,
+  name,
+  image,
+  life,
+  attack,
+  defense,
+  speed,
+  height,
+  weight,
+  type,
+}) => {
+  let updatedPokemon = {
+    id,
+    name,
+    image,
+    life,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+  };
+
+  const foundTypes = await Type.findAll({ where: { name: type } });
+
+  if (foundTypes.length > 0) {
+    const updatedRows = await Pokemon.update(updatedPokemon, {
+      where: { id },
+    });
+
+    if (updatedRows > 0) {
+      const updatedPokemonInstance = await Pokemon.findByPk(id);
+      await updatedPokemonInstance.setTypes(foundTypes);
+
+      const typeNames = foundTypes.map((foundType) => foundType.name);
+
+      const fetchedPokemon = {
+        id: updatedPokemonInstance.id,
+        name: updatedPokemonInstance.name,
+        image: updatedPokemonInstance.image,
+        life: updatedPokemonInstance.life,
+        attack: updatedPokemonInstance.attack,
+        defense: updatedPokemonInstance.defense,
+        speed: updatedPokemonInstance.speed,
+        height: updatedPokemonInstance.height,
+        weight: updatedPokemonInstance.weight,
+        type: typeNames,
+      };
+
+      console.log(fetchedPokemon);
+      return fetchedPokemon;
+    } else {
+      console.error("Unable to update the specified Pokemon.");
+      return null;
+    }
   } else {
     console.error("Unable to find the specified types.");
     return null;
