@@ -7,15 +7,15 @@ export default function Card(data) {
 
   return (
     <div className="Card" key={data.id}>
+      <Link to={`/pokemons/detail/${data.id}`} className="Card-link">
+        <button className="Card-button">+</button>
+      </Link>
       <img className="Card-image" src={data.image} alt={data.name} />
       <h2 className="Card-name">{data.name}</h2>
       <div className="typesContainer">
         <p className={`Card-type-${data.type[0]}`}>{data.type[0]}</p>
         <p className={`Card-type-${data.type[1]}`}>{data.type[1]}</p>
       </div>
-      <Link to={`/pokemons/detail/${data.id}`} className="Card-link">
-        <button className="Card-button">+</button>
-      </Link>
     </div>
   );
 }

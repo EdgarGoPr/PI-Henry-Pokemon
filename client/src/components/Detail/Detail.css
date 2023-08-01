@@ -1,29 +1,32 @@
 .DetailCard {
   position: relative;
-  border: 1px solid #000;
-  border-radius: 10%;
+  border: 5px solid #ccccccc7;
+  border-radius: 5%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 32px;
   width: 400px;
   height: 600px;
   margin: 16px auto;
   text-align: center;
-  background-color: #666666c2;
+  background-color: #666666e1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .DetailCard img {
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   object-fit: cover;
   border-radius: 20%;
 }
 
 .DetailCard h2 {
+  margin-top: 0;
   background-color: #ffffff80;
+  border: 2px solid #000;
   border-radius: 10%;
+  width: 400px;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 16px;
@@ -34,15 +37,16 @@
   background-color: #ffffff80;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 }
 
 .DetailCard h3 {
   background-color: #ffffff80;
+  border: 2px solid #000;
   border-radius: 10%;
   width: 140px;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .DetailCard .properties-left {
@@ -61,5 +65,58 @@
   color: black;
   background-color: #ffffff80;
   border-radius: 10%;
-  width: 220px;
+  width: 300px;
+}
+
+.LinkHome {
+  width: 120px;
+  margin-top: 20px;
+  margin-left: 80px;
+  align-self: flex-end;
+  background: #007bff77;
+  background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);
+  -webkit-border-radius: 28;
+  border: 2px solid #ccccccc7;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: wheat;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.LinkHome:hover {
+  background: #0057b3af;;
+  background-image: -webkit-linear-gradient(top, #0057b3b7, #3498dbb7);
+  text-decoration: none;
+}
+
+.DeleteDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.DeleteButton {
+  width: 300px;
+  margin-top: 20px;
+  align-self: center;
+  background: #007bff77;
+  background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);
+  -webkit-border-radius: 28;
+  border: 2px solid #ccccccc7;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: wheat;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.DeleteButton:hover {
+  background: #0057b3af;;
+  background-image: -webkit-linear-gradient(top, #0057b3b7, #3498dbb7);
+  text-decoration: none;
 }

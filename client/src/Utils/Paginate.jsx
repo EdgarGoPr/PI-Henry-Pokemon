@@ -1,9 +1,15 @@
 import React from "react";
 
 const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
+  const visiblePageCount = 5;
+  const startPage = Math.max(1, currentPage - Math.floor(visiblePageCount / 2));
+  const endPage = Math.min(startPage + visiblePageCount - 1, totalPages);
+
+  const showPrevButton = currentPage > 1;
+  const showNextButton = currentPage < totalPages;
   const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
+    { length: endPage - startPage + 1 },
+    (_, index) => startPage + index
   );
 
   const handleFirstPage = () => {
@@ -28,22 +34,26 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
 
   return (
     <div className="pagination-buttons">
-      <button
-        key={"<<<"}
-        className={"<<<" === currentPage ? "active" : ""}
-        onClick={handleFirstPage}
-        disabled={currentPage === 0}
-      >
-        {"<<<"}
-      </button>
-      <button
-        key={"<"}
-        className={"<" === currentPage ? "active" : ""}
-        onClick={handlePreviousPage}
-        disabled={currentPage === 1}
-      >
-        {"<"}
-      </button>
+      {showPrevButton && (
+        <button
+          key={"<<<"}
+          className={"<<<" === currentPage ? "active" : ""}
+          onClick={handleFirstPage}
+          disabled={currentPage === 0}
+        >
+          {"<<<"}
+        </button>
+      )}
+
+      {showPrevButton && (
+        <button
+          onClick={handlePreviousPage}
+          className={"<" === currentPage ? "active" : ""}
+          disabled={currentPage === 1}
+        >
+          &lt;
+        </button>
+      )}
       {pageNumbers.map((pageNumber) => (
         <button
           key={pageNumber}
@@ -53,20 +63,25 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
           {pageNumber}
         </button>
       ))}
-      <button
-        key={">"}
-        className={">" === currentPage ? "active" : ""}
-        onClick={handleNextPage}
-        disabled={currentPage === totalPages - 1}
-      >{">"}</button>
-      <button
-        key={">>>"}
-        className={">>>" === currentPage ? "active" : ""}
-        onClick={handleLastPage}
-        disabled={currentPage === totalPages - 1}
-      >
-        {">>>"}
-      </button>
+      {showNextButton && (
+        <button
+          onClick={handleNextPage}
+          className={"<" === currentPage ? "active" : ""}
+          disabled={currentPage === totalPages - 1}
+        >
+          &gt;
+        </button>
+      )}
+      {showNextButton && (
+        <button
+          key={">>>"}
+          className={">>>" === currentPage ? "active" : ""}
+          onClick={handleLastPage}
+          disabled={currentPage === totalPages - 1}
+        >
+          {">>>"}
+        </button>
+      )}
     </div>
   );
 };

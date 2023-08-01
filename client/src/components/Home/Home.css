@@ -52,7 +52,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 10px solid black;
+  border: 10px solid #ccccccc7;
   border-radius: 10%;
 
 }

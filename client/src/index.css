@@ -5,15 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background: linear-gradient(to bottom, #44b47c, #54a782); */
   background-image: url('./Utils/wallpaperbetter.jpg');
-  /* min-height: 100vh;  */
   width: 100%; 
   padding: 0;
-  /* overflow: hidden; */
-  /* text-align: center; */
-  /* display: flex; */
-  /* align-items: center; */
 }
 
 

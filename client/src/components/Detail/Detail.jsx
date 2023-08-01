@@ -28,7 +28,7 @@ export default function Detail() {
     <div className="Detail">
       <div>
         <Link to="/pokemons">
-          <button>HOME</button>
+          <button className="LinkHome">HOME</button>
         </Link>
       </div>
       {pokemonDetail ? (
@@ -58,9 +58,9 @@ export default function Detail() {
       ) : (
         <img src="./detective_dancing.gif" alt="Loading..." />
       )}
-      <div>
+      <div className="DeleteDiv">
         {pokemonDetail?.source === "DB" && (
-          <button onClick={()=>handleDelete}>Delete</button>
+          <button onClick={handleDelete} className="DeleteButton">Delete</button>
         )}
       </div>
     </div>

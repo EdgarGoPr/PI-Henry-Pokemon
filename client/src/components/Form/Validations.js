@@ -1,8 +1,12 @@
 export default function validations(form) {
   let error = {}
 
-  if (!form.name || !form.name.length) {
+  if (!form.name) {
     error.name = 'Enter pokemon name'
+  }
+
+  if (form.name.length > 20) {
+    error.name = 'Pick a shorter name'
   }
 
   const life = parseInt(form.life)

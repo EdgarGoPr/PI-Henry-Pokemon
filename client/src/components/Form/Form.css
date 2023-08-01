@@ -1,22 +1,16 @@
 .homeButton {
   margin-top: 20px;
   margin-left: 20px;
-  background: #007bff31;
-  background-image: -webkit-linear-gradient(top, #007bff83, #297fb98e);
+  background: #007bff77;
+  background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);
   -webkit-border-radius: 28;
+  border: 2px solid #ccccccc7;
   border-radius: 28px;
   font-family: Georgia;
-  color: #ffffff;
+  color: wheat;
   font-size: 20px;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
-}
-
-.form-container {
-  /* display: flex; */
-  align-items: flex-start;
-  /* justify-content: center; */
-  /* height: 100vh; */
 }
 
 form {
@@ -40,7 +34,6 @@ form {
 
 .inputs-container {
   margin-right: 200px;
-  /* margin-bottom: 200px; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -53,7 +46,8 @@ form {
   border-radius: 10px;
   margin-bottom: 25px;
   padding: 10px;
-  background-color: #378d3bb7;
+  background-color: #378d3be3;
+  border: 2px solid #ccccccc7;
   color: wheat;
 }
 
@@ -63,7 +57,10 @@ form {
 }
 
 .Type {
-  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #181818ec;
 }
 
 .buttons-container {
@@ -73,11 +70,11 @@ form {
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  border: 5px solid #ccccccc7;
   padding: 15px;
   align-self: center;
-  background-color: #bb5918c2;
-  border-radius: 10%;
+  background-color: #bb5918d2;
+  border-radius: 5%;
 }
 
 .buttons {
@@ -101,20 +98,22 @@ form {
   margin-top: 10px;
   margin-left: 130px;
   align-self: flex-end;
-  background: #007bff31;
-  background-image: -webkit-linear-gradient(top, #007bff83, #297fb98e);
+  background: #007bff77;
+  background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);
   -webkit-border-radius: 28;
+  border: 2px solid #ccccccc7;
   border-radius: 28px;
   font-family: Georgia;
-  color: #ffffff;
+  color: wheat;
   font-size: 20px;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
+.homeButton:hover,
 .create-button:hover {
-  background: #0057b3af;;
+  background: #0057b3af;
   background-image: -webkit-linear-gradient(top, #0057b3b7, #3498dbb7);
   text-decoration: none;
 }
@@ -126,13 +125,13 @@ form {
 .selectButton {
   height: 30px;
   width: 30px;
-  background-color: #ccccccb2;
+  background-color: #cccccc79;
   color: #ffffffa6;
   transition: background-color 0.3s ease;
 }
 
 .selectButton:hover {
-  background-color: #808080b4;
+  background-color: #57565641;
 }
 
 .selectButton.active {
@@ -141,7 +140,7 @@ form {
   align-items: center;
   height: 30px;
   width: 30px;
-  background-image: url('./bokeball.jpg');
+  background-image: url("./bokeball.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -164,17 +163,26 @@ form {
   align-items: center;
 }
 
-.error-message-type {
-  position: absolute;
+.error-message-types {
+  position: relative;
+  width: 255px;
   right: 0;
-  background-color: #ffcccc;
+  margin-top: -50px;
+  background-color: #fdb0b0;
   padding: 5px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
 }
 
+.ErrorDiv {
+  margin-right: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
 
 input {
   width: 700px;

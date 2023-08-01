@@ -229,7 +229,6 @@ export default function Form() {
                 {types &&
                   types.map((type) => (
                     <TypeButton
-                      className={`Card-type-${type}`}
                       key={uuidv4()}
                       type={type}
                       formType={form.type}
@@ -237,13 +236,13 @@ export default function Form() {
                     />
                   ))}
               </div>
-              <div>
-                {" "}
-                {error.type && (
-                  <p className="error-message-types">{error.type}</p>
-                )}{" "}
-              </div>
             </div>
+          </div>
+          <div className="ErrorDiv">
+            {" "}
+            {error.type && (
+              <p className="error-message-types">{error.type}</p>
+            )}{" "}
           </div>
           <button type="submit" className="create-button">
             Create Pokemons

@@ -1,25 +1,26 @@
 .FondoLanding {
-  background-image: url('./Bulbasaurcito2.png');
+  background-image: url('./wallpaperbetter.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .Enter {
+  margin-top: 90px;
   border: none;
   border-radius: 50%;
   /* background-color: rgba(87, 87, 87, 0.521); */
-  background-image: url('./Honor_ball_verde.png');
+  background-image: url('./PngItem_1075234.png');
   background-size: 110%;
   background-position: center;
   width: 200px;
   height: 200px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.6s;
 }
 
 .Enter:hover {
@@ -27,6 +28,7 @@
 }
 
 .Enter:active {
+  margin-top: 400px;
   transform: scale(0.75) rotate(180deg) ;
   animation: vanish 1s forwards;
 }
