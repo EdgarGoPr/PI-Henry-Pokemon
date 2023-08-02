@@ -1,8 +1,10 @@
 export default function validations(form) {
   let error = {}
 
-  if (!form.name) {
-    error.name = 'Enter pokemon name'
+  if (!form.name.length) {
+    error.name = "Enter a name";
+  } else if (!/^[a-zA-Z]+$/.test(form.name)) {
+    error.name = "There is an error in the name";
   }
 
   if (form.name.length > 20) {
@@ -39,14 +41,13 @@ export default function validations(form) {
     error.weight = 'Choose between 1 and 255'
   }
 
-  // const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/[\w.-]*)*\/?$/i;
-  //   if (!urlRegex.test(form.img)) {
-  //     error.img = "Invalid URL";
-  //   }
-  if (form.image.length < 20) {
-    error.img = 'Enter a valid URL'
+  if (!/^https?:\/\/\S+$/.test(form.image)) {
+    error.image = "Invalid image URL";
   }
 
+  if(form.type.length === 0) {
+    error.type = 'Must select al least one type'
+  }
   if (form.type.length > 2) {
     error.type = 'Can not use more than two types'
   }

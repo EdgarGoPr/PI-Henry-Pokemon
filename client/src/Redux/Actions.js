@@ -8,7 +8,19 @@ import {
   SET_PAGE_SIZE,
   DELETE,
   DETAIL,
+  CHANGE,
 } from "./ActionType";
+
+export const change = (id, formEdit) => {
+  return async (dispatch) => {
+    // console.log('form', form)
+    const response = await axios.put(`http://localhost:3001/pokemons/${id}`, formEdit)
+    dispatch({
+      type: CHANGE,
+      payload: response.data
+    })
+  }
+}
 
 export function create(form) {
   return async (dispatch) => {

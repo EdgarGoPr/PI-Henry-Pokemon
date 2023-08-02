@@ -8,4 +8,5 @@ export const SET_PAGE = 'SET_PAGE';
 export const SET_PAGE_SIZE = 'SET_PAGE_SIZE';
 export const DELETE = 'DELETE'
 export const DETAIL = 'DETAIL'
+export const CHANGE = 'CHANGE'
 

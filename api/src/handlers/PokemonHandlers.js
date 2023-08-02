@@ -9,6 +9,7 @@ const {
   sortPokemonsByAttack,
   getPokemonBySource,
   deletePokemon,
+  changePokemon,
 } = require("../controllers/PokemonsController");
 
 const getPokemons = async (req, res) => {
@@ -79,9 +80,21 @@ const pokemonCreado = async (req, res) => {
   }
 };
 
+const pokemonChanged = async (req, res) => {
+  const { id } = req.params
+  const { name, image, life, attack, defense, speed, height, weight, type } = req.body;
+  try {
+    const pokeCambiado = await changePokemon(id, name, image, life, attack, defense, speed, height, weight, type)
+    res.json(pokeCambiado)
+  } catch (error) {
+    res.json({ error: error.message })
+  }
+}
+
 module.exports = {
   getPokemons,
   pokemonDetail,
   pokemonCreado,
   pokemonDestroy,
+  pokemonChanged
 };

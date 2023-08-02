@@ -2,26 +2,38 @@ import React, { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./Detail.css";
-import { deletePokemon, fetchPokemons, getPokemonDetail } from "../../Redux/Actions";
+import {
+  deletePokemon,
+  fetchPokemons,
+  getPokemonDetail,
+} from "../../Redux/Actions";
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const pokemonDetail= useSelector((state) => state.pokemonDetail);
+  const pokemonDetail = useSelector((state) => state.pokemonDetail);
 
   useEffect(() => {
     dispatch(getPokemonDetail(id));
   }, [dispatch, id]);
-  
-  console.log("pokemonDetail", pokemonDetail)
-  ;
+
+  console.log("pokemonDetail", pokemonDetail);
 
   const handleDelete = () => {
-    dispatch(deletePokemon(id))
-    dispatch(fetchPokemons())
-    alert('Pokemon deleted successfuly')
-    navigate("/pokemons");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this Pokémon?"
+    );
+    if (confirmed) {
+      dispatch(deletePokemon(id));
+      dispatch(fetchPokemons());
+      alert("Pokemon deleted successfully");
+      navigate("/pokemons");
+    }
+  };
+
+  const handleEdit = () => {
+    navigate(`/pokemons/edit/${id}`);
   };
 
   return (
@@ -60,7 +72,16 @@ export default function Detail() {
       )}
       <div className="DeleteDiv">
         {pokemonDetail?.source === "DB" && (
-          <button onClick={handleDelete} className="DeleteButton">Delete</button>
+          <button onClick={handleEdit} className="DeleteButton">
+            Edit Pokemon
+          </button>
+        )}
+      </div>
+      <div className="DeleteDiv">
+        {pokemonDetail?.source === "DB" && (
+          <button onClick={handleDelete} className="DeleteButton">
+            Delete Pokemon
+          </button>
         )}
       </div>
     </div>

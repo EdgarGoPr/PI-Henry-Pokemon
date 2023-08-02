@@ -1,6 +1,6 @@
 // Reducer.js
 
-import { RESET, FETCH, TYPES, CREATE, FILTERED, ORDER, SET_PAGE, SET_PAGE_SIZE, DELETE, DETAIL } from "./ActionType";
+import { RESET, FETCH, TYPES, CREATE, FILTERED, ORDER, SET_PAGE, SET_PAGE_SIZE, DELETE, DETAIL, CHANGE } from "./ActionType";
 
 const initialState = {
   pokemons: [],
@@ -17,6 +17,11 @@ const initialState = {
 
 export default function rootReducer(state = initialState, { source, sort, tipo, totalPokemonsCount, type, payload }) {
   switch (type) {
+    case CHANGE:
+      return {
+        ...state,
+        pokemons: payload,
+      }
     case DETAIL:
       return {
         ...state,

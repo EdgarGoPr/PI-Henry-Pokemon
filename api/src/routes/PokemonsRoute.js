@@ -3,6 +3,7 @@ const {
   pokemonDetail,
   pokemonCreado,
   pokemonDestroy,
+  pokemonChanged,
 } = require("../handlers/PokemonHandlers");
 
 
@@ -12,6 +13,7 @@ pokemonRoute.get("/", getPokemons);
 pokemonRoute.get("/:id", pokemonDetail);
 pokemonRoute.post("/", pokemonCreado);
 pokemonRoute.delete("/:id", pokemonDestroy);
+pokemonRoute.put('/:id', pokemonChanged);
 
 
 module.exports = pokemonRoute;

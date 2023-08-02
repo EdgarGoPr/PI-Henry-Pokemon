@@ -1,0 +1,193 @@
+.homeButton {
+  margin-top: 20px;
+  margin-left: 20px;
+  background: #007bff77;
+  background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);
+  -webkit-border-radius: 28;
+  border: 2px solid #ccccccc7;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: wheat;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+.top-left {
+  margin-top: 10px;
+  margin-left: 10px;
+  align-self: flex-start;
+}
+
+.inputs {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs-container {
+  margin-right: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 100px;
+}
+
+.inputs input {
+  width: 700px;
+  height: 40px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  padding: 10px;
+  background-color: #378d3be3;
+  border: 2px solid #ccccccc7;
+  color: wheat;
+}
+
+.inputs input::placeholder {
+  font-size: 16px;
+  color: wheat;
+}
+
+.Type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #181818ec;
+}
+
+.buttons-container {
+  margin-top: 120px;
+  margin-left: auto;
+  margin-right: 400px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #ccccccc7;
+  padding: 15px;
+  align-self: center;
+  background-color: #bb5918d2;
+  border-radius: 5%;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
+  justify-content: flex-end;
+}
+
+.buttons > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.create-button {
+  width: 300px;
+  margin-top: 10px;
+  margin-left: 130px;
+  align-self: flex-end;
+  background: #007bff77;
+  background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);
+  -webkit-border-radius: 28;
+  border: 2px solid #ccccccc7;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: wheat;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.homeButton:hover,
+.create-button:hover {
+  background: #0057b3af;
+  background-image: -webkit-linear-gradient(top, #0057b3b7, #3498dbb7);
+  text-decoration: none;
+}
+
+.roundButton {
+  border-radius: 50%;
+}
+
+.selectButton {
+  height: 30px;
+  width: 30px;
+  background-color: #cccccc79;
+  color: #ffffffa6;
+  transition: background-color 0.3s ease;
+}
+
+.selectButton:hover {
+  background-color: #57565641;
+}
+
+.selectButton.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  background-image: url("./bokeball.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.input-container {
+  display: flex;
+  position: relative;
+}
+
+.error-message {
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  background-color: #ffcccc;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+}
+
+.error-message-types {
+  position: relative;
+  width: 255px;
+  right: 0;
+  margin-top: -50px;
+  background-color: #fdb0b0;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.ErrorDiv {
+  margin-right: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+input {
+  width: 700px;
+  height: 40px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+}

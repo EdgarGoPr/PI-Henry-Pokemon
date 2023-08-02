@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { fetchPokemons, getTypes, create } from "../../Redux/Actions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  fetchPokemons,
+  getTypes,
+  change,
+  getPokemonDetail,
+} from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import validations from "./Validations";
-import "./Form.css";
+import "./FormEdit.css";
 
 const TypeButton = ({ type, formType, handleTypeClick }) => {
   const isActive = formType.includes(type);
@@ -27,15 +32,32 @@ const useNameExists = (name) => {
   );
 };
 
-export default function Form() {
+export default function FormEdit() {
+  const { id } = useParams();
   const [error, setError] = useState({});
   const types = useSelector((state) => state.types);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const pokemonDetail = useSelector((state) => state.pokemonDetail);
 
   useEffect(() => {
     dispatch(getTypes());
+    dispatch(getPokemonDetail(id));
   }, [dispatch]);
+
+  useEffect(() => {
+    setForm({
+      name: pokemonDetail?.name || "",
+      image: pokemonDetail?.image || "",
+      life: pokemonDetail?.life || "",
+      attack: pokemonDetail?.attack || "",
+      defense: pokemonDetail?.defense || "",
+      speed: pokemonDetail?.speed || "",
+      height: pokemonDetail?.height || "",
+      weight: pokemonDetail?.weight || "",
+      type: pokemonDetail?.type || [],
+    });
+  }, [pokemonDetail]);
 
   const [form, setForm] = useState({
     name: "",
@@ -53,6 +75,8 @@ export default function Form() {
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
+    console.log("Name:", name);
+    console.log("Value:", value);
     setForm((prevForm) => ({
       ...prevForm,
       [name]: value,
@@ -67,39 +91,37 @@ export default function Form() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const errors = validations(form);
 
-    if (Object.keys(errors).length === 0) {
-      if (nameExists) {
-        setError((prevError) => ({
-          ...prevError,
-          name: "Pokemon name already exists!",
-        }));
-        alert("Pokemon name already exists!");
-      } else {
-        const newPokemon = {
-          name: form.name.toLowerCase(),
-          image: form.image,
-          life: form.life,
-          attack: form.attack,
-          defense: form.defense,
-          speed: form.speed,
-          height: form.height,
-          weight: form.weight,
-          type: form.type,
-        };
-        const confirmed = window.confirm(
-          "Are you sure you want to create a new Pokémon?"
-        );
-        if (confirmed) {
-          alert(`There's a new Pokémon in town, welcome ${newPokemon.name}`);
-          dispatch(create(newPokemon));
-          dispatch(fetchPokemons());
-          navigate("/pokemons");
-        }
-      }
+    if (nameExists) {
+      setError((prevError) => ({
+        ...prevError,
+        name: "Pokemon name already exists!",
+      }));
+      alert("Pokemon name already exists!");
     } else {
-      alert("Could not create pokemon, missing data");
+      const updatedPokemon = {
+        name: form.name.toLowerCase(),
+        image: form.image,
+        life: form.life,
+        attack: form.attack,
+        defense: form.defense,
+        speed: form.speed,
+        height: form.height,
+        weight: form.weight,
+        type: form.type,
+      };
+      const confirmed = window.confirm(
+        "Are you sure you want to edit a new Pokémon?"
+      );
+      if (confirmed) {
+        alert(
+          `Your pokemon has evolved to ${updatedPokemon.name} with new stats!`
+        );
+        console.log("updatedPokemon", updatedPokemon);
+        dispatch(change(id, updatedPokemon));
+        dispatch(fetchPokemons());
+        navigate(`/pokemons/detail/${id}`);
+      }
     }
   };
 
@@ -115,7 +137,6 @@ export default function Form() {
           ...prevError,
           type: "Can not select more than two types",
         }));
-        return;
       }
 
       setForm((prevForm) => ({
@@ -135,8 +156,8 @@ export default function Form() {
   return (
     <div className="form-container">
       <div className="top-left">
-        <Link to="/pokemons">
-          <button className="homeButton">Home</button>
+        <Link to={`/pokemons/detail/${id}`}>
+          <button className="homeButton">Go Back</button>
         </Link>
       </div>
       <form onSubmit={submitHandler}>
@@ -146,8 +167,7 @@ export default function Form() {
               <input
                 type="text"
                 name="name"
-                placeholder="NAME"
-                value={form.name}
+                placeholder={`NAME`}
                 onChange={changeHandler}
               />
               {error.name && <p className="error-message">{error.name}</p>}
@@ -156,8 +176,7 @@ export default function Form() {
               <input
                 type="text"
                 name="image"
-                placeholder="IMAGE URL"
-                value={form.image}
+                placeholder={`IMAGE URL`}
                 onChange={changeHandler}
               />
               {error.image && <p className="error-message">{error.image}</p>}
@@ -166,8 +185,7 @@ export default function Form() {
               <input
                 type="number"
                 name="life"
-                placeholder="HEALTH"
-                value={form.life}
+                placeholder={`HEALTH`}
                 onChange={changeHandler}
               />
               {error.life && <p className="error-message">{error.life}</p>}
@@ -176,8 +194,7 @@ export default function Form() {
               <input
                 type="number"
                 name="attack"
-                placeholder="ATTACK"
-                value={form.attack}
+                placeholder={`ATTACK`}
                 onChange={changeHandler}
               />
               {error.attack && <p className="error-message">{error.attack}</p>}
@@ -186,8 +203,7 @@ export default function Form() {
               <input
                 type="number"
                 name="defense"
-                placeholder="DEFENSE"
-                value={form.defense}
+                placeholder={`DEFENSE`}
                 onChange={changeHandler}
               />
               {error.defense && (
@@ -198,8 +214,7 @@ export default function Form() {
               <input
                 type="number"
                 name="speed"
-                placeholder="SPEED"
-                value={form.speed}
+                placeholder={`SPEED`}
                 onChange={changeHandler}
               />
               {error.speed && <p className="error-message">{error.speed}</p>}
@@ -208,8 +223,7 @@ export default function Form() {
               <input
                 type="number"
                 name="height"
-                placeholder="HEIGHT"
-                value={form.height}
+                placeholder={`HEIGHT`}
                 onChange={changeHandler}
               />
               {error.height && <p className="error-message">{error.height}</p>}
@@ -218,8 +232,7 @@ export default function Form() {
               <input
                 type="number"
                 name="weight"
-                placeholder="WEIGHT"
-                value={form.weight}
+                placeholder={`WEIGHT`}
                 onChange={changeHandler}
               />
               {error.weight && <p className="error-message">{error.weight}</p>}
@@ -244,13 +257,10 @@ export default function Form() {
             </div>
           </div>
           <div className="ErrorDiv">
-            {" "}
-            {error.type && (
-              <p className="error-message-types">{error.type}</p>
-            )}{" "}
+            {error.type && <p className="error-message-types">{error.type}</p>}
           </div>
           <button type="submit" className="create-button">
-            Create Pokemons
+            Edit Pokemon
           </button>
         </div>
       </form>
