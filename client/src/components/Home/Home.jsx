@@ -93,8 +93,8 @@ export default function Home() {
 
   const sourceOptions = [
     { value: "reset", label: "Select Source" },
-    { value: "DB", label: "Data Base" },
-    { value: "API", label: "Api" },
+    { value: "DB", label: "My Pokemons" },
+    { value: "API", label: "Original Pokemons" },
   ];
 
   return (

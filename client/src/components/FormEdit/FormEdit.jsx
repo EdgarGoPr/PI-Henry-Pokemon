@@ -25,12 +25,12 @@ const TypeButton = ({ type, formType, handleTypeClick }) => {
   );
 };
 
-const useNameExists = (name) => {
-  const pokemons = useSelector((state) => state.pokemons);
-  return pokemons.some(
-    (pokemon) => pokemon.name.toLowerCase() === name.toLowerCase()
-  );
-};
+// const useNameExists = (name) => {
+//   const pokemons = useSelector((state) => state.pokemons);
+//   return pokemons.some(
+//     (pokemon) => pokemon.name.toLowerCase() === name.toLowerCase()
+//   );
+// };
 
 export default function FormEdit() {
   const { id } = useParams();
@@ -71,7 +71,7 @@ export default function FormEdit() {
     type: [],
   });
 
-  const nameExists = useNameExists(form.name);
+  // const nameExists = useNameExists(form.name);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -91,14 +91,16 @@ export default function FormEdit() {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    const errors = validations(form);
 
-    if (nameExists) {
-      setError((prevError) => ({
-        ...prevError,
-        name: "Pokemon name already exists!",
-      }));
-      alert("Pokemon name already exists!");
-    } else {
+    if (Object.keys(errors).length === 0) {
+      // if (nameExists) {
+      //   setError((prevError) => ({
+      //     ...prevError,
+      //     name: "Pokemon name already exists!",
+      //   }));
+      //   alert("Pokemon name already exists!");
+      // } else {
       const updatedPokemon = {
         name: form.name.toLowerCase(),
         image: form.image,
@@ -122,6 +124,9 @@ export default function FormEdit() {
         dispatch(fetchPokemons());
         navigate(`/pokemons/detail/${id}`);
       }
+      // }
+    } else {
+      alert("Could not create pokemon, missing data");
     }
   };
 

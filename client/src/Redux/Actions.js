@@ -13,7 +13,6 @@ import {
 
 export const change = (id, formEdit) => {
   return async (dispatch) => {
-    // console.log('form', form)
     const response = await axios.put(`http://localhost:3001/pokemons/${id}`, formEdit)
     dispatch({
       type: CHANGE,
@@ -24,11 +23,16 @@ export const change = (id, formEdit) => {
 
 export function create(form) {
   return async (dispatch) => {
-    const response = await axios.post('http://localhost:3001/pokemons/', form);
+    try {
+      const response = await axios.post('http://localhost:3001/pokemons/', form);
     dispatch({
       type: CREATE,
       payload: response.data,
     });
+    } catch (error) {
+      throw new Error ({error: error.message})
+    }
+    
   };
 }
 

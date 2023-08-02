@@ -66,7 +66,7 @@ form {
 .buttons-container {
   margin-top: 120px;
   margin-left: auto;
-  margin-right: 400px;
+  margin-right: 200px;
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,7 @@ form {
 .create-button {
   width: 300px;
   margin-top: 10px;
-  margin-left: 130px;
+  margin-left: 150px;
   align-self: flex-end;
   background: #007bff77;
   background-image: -webkit-linear-gradient(top, #007bffa9, #297fb9b2);

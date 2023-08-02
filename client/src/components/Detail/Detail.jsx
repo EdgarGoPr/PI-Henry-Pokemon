@@ -57,8 +57,8 @@ export default function Detail() {
               </div>
               <div className="properties-right">
                 <h3>SPD: {pokemonDetail.speed} pts</h3>
-                <h3>HGT: {pokemonDetail.height} pts</h3>
-                <h3>WGT: {pokemonDetail.weight} pts</h3>
+                <h3>HGT: {pokemonDetail.height} cm</h3>
+                <h3>WGT: {pokemonDetail.weight} kg</h3>
               </div>
             </div>
             <h3 className="type">
@@ -68,7 +68,13 @@ export default function Detail() {
           </div>
         </div>
       ) : (
-        <img src="./detective_dancing.gif" alt="Loading..." />
+        <div className="LoadingContainer">
+          <img
+            src="https://media.tenor.com/_B4QaT_C3WsAAAAC/bulbasaur-pokemon.gif"
+            alt="Loading..."
+            className="Loadingg"
+          />
+        </div>
       )}
       <div className="DeleteDiv">
         {pokemonDetail?.source === "DB" && (
