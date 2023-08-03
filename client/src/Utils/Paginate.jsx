@@ -47,11 +47,12 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
 
       {showPrevButton && (
         <button
+        key={"<"}
           onClick={handlePreviousPage}
           className={"<" === currentPage ? "active" : ""}
           disabled={currentPage === 1}
         >
-          &lt;
+          {"<"}
         </button>
       )}
       {pageNumbers.map((pageNumber) => (
@@ -65,11 +66,12 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
       ))}
       {showNextButton && (
         <button
+        key={">"}
           onClick={handleNextPage}
-          className={"<" === currentPage ? "active" : ""}
+          className={">" === currentPage ? "active" : ""}
           disabled={currentPage === totalPages - 1}
         >
-          &gt;
+          {">"}
         </button>
       )}
       {showNextButton && (
@@ -77,7 +79,7 @@ const PaginationButtons = ({ totalPages, currentPage, onPageChange }) => {
           key={">>>"}
           className={">>>" === currentPage ? "active" : ""}
           onClick={handleLastPage}
-          disabled={currentPage === totalPages - 1}
+          disabled={currentPage === totalPages + 1}
         >
           {">>>"}
         </button>

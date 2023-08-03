@@ -94,13 +94,6 @@ export default function FormEdit() {
     const errors = validations(form);
 
     if (Object.keys(errors).length === 0) {
-      // if (nameExists) {
-      //   setError((prevError) => ({
-      //     ...prevError,
-      //     name: "Pokemon name already exists!",
-      //   }));
-      //   alert("Pokemon name already exists!");
-      // } else {
       const updatedPokemon = {
         name: form.name.toLowerCase(),
         image: form.image,
@@ -142,6 +135,7 @@ export default function FormEdit() {
           ...prevError,
           type: "Can not select more than two types",
         }));
+        return;
       }
 
       setForm((prevForm) => ({

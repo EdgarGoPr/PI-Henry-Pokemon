@@ -34,19 +34,6 @@ const paginatePokemons = (pokemons, page, pageSize) => {
   return pokemons.slice(startIndex, endIndex);
 };
 
-const deletePokemon = async (id) => {
-  if (id.length <= 4) {
-    throw new Error('Cannot delete Pokemon from API')
-  } else {
-    const dbPokemon = await Pokemon.findByPk(id)
-    if (!dbPokemon) {
-      throw new Error(`Pokemon with ID ${id} not found in the database.`);
-    }
-    await dbPokemon.destroy()
-    return { message: 'Pokemon deleted successfully' };
-  }
-}
-
 const sortPokemonsByName = async (sort = 'asc', pokemons) => {
   const allPokemons = await pokemons;
   const sortedPokemons = allPokemons.slice().sort((a, b) => {
@@ -207,6 +194,19 @@ const createPokemon = async ({
     return null;
   }
 };
+
+const deletePokemon = async (id) => {
+  if (id.length <= 4) {
+    throw new Error('Cannot delete Pokemon from API')
+  } else {
+    const dbPokemon = await Pokemon.findByPk(id)
+    if (!dbPokemon) {
+      throw new Error(`Pokemon with ID ${id} not found in the database.`);
+    }
+    await dbPokemon.destroy()
+    return { message: 'Pokemon deleted successfully' };
+  }
+}
 
 const changePokemon = async (
   id,

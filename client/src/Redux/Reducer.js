@@ -1,6 +1,4 @@
-// Reducer.js
-
-import { RESET, FETCH, TYPES, CREATE, FILTERED, ORDER, SET_PAGE, SET_PAGE_SIZE, DELETE, DETAIL, CHANGE } from "./ActionType";
+import { RESET, FETCH, TYPES, CREATE, FILTERED, ORDER, DELETE, DETAIL, CHANGE } from "./ActionType";
 
 const initialState = {
   pokemons: [],
@@ -60,16 +58,6 @@ export default function rootReducer(state = initialState, { source, sort, tipo, 
         tipo: tipo,
         sort: sort,
         source: source,
-      };
-    case SET_PAGE:
-      return {
-        ...state,
-        page: payload,
-      };
-    case SET_PAGE_SIZE:
-      return {
-        ...state,
-        pageSize: payload.totalPokemonsCount,
       };
     case DELETE:
       const deletedPokemonId = payload.id;
